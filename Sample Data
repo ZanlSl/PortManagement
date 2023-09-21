@@ -1,0 +1,70 @@
+PORTS:
+1. ID: P001, Name: Port A, Latitude: 40.7128, Longitude: -74.0060, Storing Capacity: 100000, Landing Ability: true
+2. ID: P002, Name: Port B, Latitude: 34.0522, Longitude: -118.2437, Storing Capacity: 80000, Landing Ability: true
+3. ID: P003, Name: Port C, Latitude: 51.5074, Longitude: -0.1278, Storing Capacity: 120000, Landing Ability: false
+4. ID: P004, Name: Port D, Latitude: 48.8566, Longitude: 2.3522, Storing Capacity: 90000, Landing Ability: true
+5. ID: P005, Name: Port E, Latitude: 41.9028, Longitude: 12.4964, Storing Capacity: 110000, Landing Ability: false
+VEHICLES:
+1. ID: SH001, Name: Ship 1, Current Fuel: 5000.0, Carrying Capacity: 80000.0, Fuel Capacity: 10000.0, Current Port: P001
+2. ID: SH002, Name: Ship 2, Current Fuel: 6000.0, Carrying Capacity: 75000.0, Fuel Capacity: 11000.0, Current Port: P002
+3. ID: TR001, Name: Truck 1, Current Fuel: 300.0, Carrying Capacity: 5000.0, Fuel Capacity: 500.0, Current Port: P001
+4. ID: TR002, Name: Truck 2, Current Fuel: 400.0, Carrying Capacity: 4500.0, Fuel Capacity: 600.0, Current Port: P002
+5. ID: SH003, Name: Ship 3, Current Fuel: 7000.0, Carrying Capacity: 85000.0, Fuel Capacity: 12000.0, Current Port: P003
+6. ID: SH004, Name: Ship 4, Current Fuel: 5500.0, Carrying Capacity: 70000.0, Fuel Capacity: 9500.0, Current Port: P003
+7. ID: SH005, Name: Ship 5, Current Fuel: 6200.0, Carrying Capacity: 72000.0, Fuel Capacity: 9800.0, Current Port: P004
+8. ID: TR003, Name: Truck 3, Current Fuel: 350.0, Carrying Capacity: 4800.0, Fuel Capacity: 600.0, Current Port: P003
+9. ID: TR004, Name: Truck 4, Current Fuel: 420.0, Carrying Capacity: 5500.0, Fuel Capacity: 700.0, Current Port: P004
+10. ID: SH006, Name: Ship 6, Current Fuel: 8000.0, Carrying Capacity: 90000.0, Fuel Capacity: 11000.0, Current Port: P005
+11. ID: SH007, Name: Ship 7, Current Fuel: 6800.0, Carrying Capacity: 78000.0, Fuel Capacity: 10000.0, Current Port: P001
+12. ID: TR005, Name: Truck 5, Current Fuel: 400.0, Carrying Capacity: 4500.0, Fuel Capacity: 600.0, Current Port: P005
+13. ID: TR006, Name: Truck 6, Current Fuel: 380.0, Carrying Capacity: 4200.0, Fuel Capacity: 550.0, Current Port: P001
+14. ID: SH008, Name: Ship 8, Current Fuel: 7300.0, Carrying Capacity: 84000.0, Fuel Capacity: 10500.0, Current Port: P002
+15. ID: SH009, Name: Ship 9, Current Fuel: 6600.0, Carrying Capacity: 76000.0, Fuel Capacity: 9500.0, Current Port: P003
+16. ID: TR007, Name: Truck 7, Current Fuel: 350.0, Carrying Capacity: 4800.0, Fuel Capacity: 600.0, Current Port: P002
+17. ID: TR008, Name: Truck 8, Current Fuel: 420.0, Carrying Capacity: 5500.0, Fuel Capacity: 700.0, Current Port: P003
+18. ID: SH010, Name: Ship 10, Current Fuel: 8100.0, Carrying Capacity: 92000.0, Fuel Capacity: 11500.0, Current Port: P004
+19. ID: SH011, Name: Ship 11, Current Fuel: 6900.0, Carrying Capacity: 80000.0, Fuel Capacity: 10000.0, Current Port: P005
+20. ID: TR009, Name: Truck 9, Current Fuel: 400.0, Carrying Capacity: 4500.0, Fuel Capacity: 600.0, Current Port: P004
+CONTAINERS:
+1. ID: C001, Weight: 20000.0
+2. ID: C002, Weight: 15000.0
+3. ID: C003, Weight: 5000.0
+4. ID: C004, Weight: 10000.0
+5. ID: C005, Weight: 3000.0
+6. ID: C006, Weight: 7500.0
+7. ID: C007, Weight: 3000.0
+8. ID: C008, Weight: 8500.0
+9. ID: C009, Weight: 6000.0
+10. ID: C010, Weight: 4000.0
+11. ID: C011, Weight: 6500.0
+12. ID: C012, Weight: 4500.0
+13. ID: C013, Weight: 5500.0
+14. ID: C014, Weight: 7000.0
+15. ID: C015, Weight: 4800.0
+16. ID: C016, Weight: 3200.0
+17. ID: C017, Weight: 4200.0
+18. ID: C018, Weight: 5200.0
+19. ID: C019, Weight: 2800.0
+20. ID: C020, Weight: 6000.0
+21. ID: C021, Weight: 3900.0
+22. ID: C022, Weight: 4600.0
+23. ID: C023, Weight: 5800.0
+24. ID: C024, Weight: 4300.0
+25. ID: C025, Weight: 5100.0
+TRIPS:
+1. Vehicle: SH001, Departure Date: 2023-09-10, Arrival Date: 2023-09-15, Departure Port: P001, Arrival Port: P002, Status: Completed
+2. Vehicle: SH002, Departure Date: 2023-09-11, Arrival Date: 2023-09-16, Departure Port: P002, Arrival Port: P001, Status: Completed
+3. Vehicle: TR001, Departure Date: 2023-09-12, Arrival Date: 2023-09-14, Departure Port: P001, Arrival Port: P002, Status: Completed
+4. Vehicle: TR002, Departure Date: 2023-09-13, Arrival Date: 2023-09-15, Departure Port: P002, Arrival Port: P001, Status: Completed
+5. Vehicle: SH003, Departure Date: 2023-09-10, Arrival Date: 2023-09-18, Departure Port: P003, Arrival Port: P004, Status: Completed
+6. Vehicle: SH004, Departure Date: 2023-09-12, Arrival Date: 2023-09-17, Departure Port: P003, Arrival Port: P004, Status: Completed
+7. Vehicle: SH005, Departure Date: 2023-09-13, Arrival Date: 2023-09-18, Departure Port: P004, Arrival Port: P005, Status: Completed
+8. Vehicle: TR003, Departure Date: 2023-09-14, Arrival Date: 2023-09-16, Departure Port: P003, Arrival Port: P004, Status: Completed
+9. Vehicle: TR004, Departure Date: 2023-09-15, Arrival Date: 2023-09-17, Departure Port: P004, Arrival Port: P003, Status: Completed
+10. Vehicle: SH006, Departure Date: 2023-09-10, Arrival Date: 2023-09-19, Departure Port: P005, Arrival Port: P001, Status: Completed
+11. Vehicle: SH007, Departure Date: 2023-09-11, Arrival Date: 2023-09-20, Departure Port: P001, Arrival Port: P002, Status: Completed
+12. Vehicle: TR005, Departure Date: 2023-09-12, Arrival Date: 2023-09-14, Departure Port: P005, Arrival Port: P001, Status: Completed
+13. Vehicle: TR006, Departure Date: 2023-09-13, Arrival Date: 2023-09-15, Departure Port: P001, Arrival Port: P002, Status: Completed
+14. Vehicle: SH008, Departure Date: 2023-09-14, Arrival Date: 2023-09-21, Departure Port: P002, Arrival Port: P003, Status: Completed
+15. Vehicle: SH009, Departure Date: 2023-09-15, Arrival Date: 2023-09-22, Departure Port: P003, Arrival Port: P004, Status: Completed
+16. Vehicle: TR007, Departure Date

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Vehicle {
     private String ID;
     private String Type;
-    private ArrayList<Container> Containers;
+    private Container Containers;
     private double carryingCapacity;
     private double fuelCapacity;
     private double currentFuel;

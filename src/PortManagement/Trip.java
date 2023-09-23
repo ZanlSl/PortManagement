@@ -3,6 +3,7 @@ package PortManagement;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class Trip {
@@ -17,7 +18,7 @@ public class Trip {
 
     private TripStatus currentStatus;
     private enum TripStatus {
-        CANCELED,
+//        CANCELED,
         ONGOING,
         COMPLETED
     };

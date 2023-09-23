@@ -1,6 +1,7 @@
 package PortManagement;
 
 
+import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.TreeMap;
 
@@ -14,7 +15,7 @@ public class Trip {
     private Vehicle vehicle;
     private Container container;
 
-    private TripStatus Status;
+    private TripStatus currentStatus;
     private enum TripStatus {
         CANCELED,
         ONGOING,
@@ -35,8 +36,9 @@ public class Trip {
         // If the vehicle doesn't have the container, try to load it
         if (!vehicle.getContainers().contains(container)) {
             from.load(vehicle, container);
+        } else {
+            return;
         }
-        else {break;}
 
         // Calculate the distance between the two ports
         double distance = from.calculateDistance(to);
@@ -49,8 +51,11 @@ public class Trip {
         }
         if (vehicle.getCurrentFuel() < 1.0) {
             System.out.println("The vehicle does not have enough fuel for this trip");
-            Status = TripStatus.CANCELED;
+            currentStatus = TripStatus.CANCELED;
             allTrip.put(this.ID, this); // Add the item to the map when it's created
+
+        } else {
+            currentStatus = TripStatus.ONGOING;
 
         }
     }
@@ -86,7 +91,7 @@ public class Trip {
         vehicle.unload(container);
 
         // Set the status of the trip to "completed"
-        Status = TripStatus.COMPLETED;
+        currentStatus = TripStatus.COMPLETED;
     }
 
 
@@ -156,12 +161,12 @@ public class Trip {
         this.container = container;
     }
 
-    public String getStatus() {
-        return TripStatus;
+    public TripStatus getCurrentStatus() {
+        return this.currentStatus;
     }
 
-    public void setStatus(TripStatus Status) {
-        TripStatus = TripStatus;
+    public void setCurrentStatus(TripStatus currentStatusStatus) {
+        this.currentStatus = currentStatus;
     }
 
     public static TreeMap<String, Trip> getAllTrip() {

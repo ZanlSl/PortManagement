@@ -1,73 +1,90 @@
 package PortManagement;
 
-// Class representing a Port
+=
+import java.util.ArrayList;
+
 public class Port {
-    private String id;
+    private String ID;
     private String name;
     private double latitude;
     private double longitude;
-    private int storingCapacity;
+    private double currentCapacity;
+    private double totalCapacity;
     private boolean landingAbility;
+    private ArrayList<Container> containers;
+    private ArrayList<Vehicle> vehicles;
 
-    // Constructor, getters, and setters for Port
-    public Port (String id, String name, double latitude, double longitude, int storingCapacity, boolean landingAbility){
-        this.id = id;
+    public Port(String ID, String name, double latitude, double longitude, double totalCapacity, boolean landingAbility) {
+        this.ID = ID;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.storingCapacity = storingCapacity;
+        this.totalCapacity = totalCapacity;
         this.landingAbility = landingAbility;
+        this.containers = new ArrayList<>();
+        this.vehicles = new ArrayList<>();
+        updateCurrentCapacity();
     }
 
-    public void setId(String id) {
-        this.id = id;
+
+    public void addVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void load(Vehicle vehicle, Container container) {
+        if (containers.contains(container)) {
+            vehicle.load(container);
+            containers.remove(container);
+            updateCurrentCapacity();
+        } else {
+            System.out.println("This port does not have the specified container");
+        }
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    private void updateCurrentCapacity() {
+        currentCapacity = 0.0;
+        for (Container container : containers) {
+            currentCapacity += container.getWeight();
+        }
+    }
+    public void addContainer(Container container) {
+        if (currentCapacity + container.getWeight() <= totalCapacity) {
+            containers.add(container);
+            updateCurrentCapacity();
+        } else {
+            System.out.println("The port is at full capacity");
+        }
+    }
+    public double calculateDistance(Port other) {
+        double R = 6371.0; // Radius of the earth in km
+        double latDistance = Math.toRadians(other.latitude - this.latitude);
+        double lonDistance = Math.toRadians(other.longitude - this.longitude);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(this.latitude)) * Math.cos(Math.toRadians(other.latitude))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c;
+        return distance;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+
+
+    // getters and setters for each field can be added here
+    // getter for currentCapacity and totalCapacity
+    public double getCurrentCapacity() {
+        return currentCapacity;
     }
 
-    public void setStoringCapacity(int storingCapacity) {
-        this.storingCapacity = storingCapacity;
+    public double getTotalCapacity() {
+        return totalCapacity;
     }
 
-    public void setLandingAbility(boolean landingAbility) {
-        this.landingAbility = landingAbility;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public int getStoringCapacity() {
-        return storingCapacity;
-    }
-
-    public boolean isLandingAbility() {
-        return landingAbility;
-    }
-
+    @Override
     public String toString() {
-        return id + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + storingCapacity+ ";" + landingAbility ;
+        return "Port{" +
+                "ID='" + ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
+                ";"+ containers +
+                ";"+ vehicles ;
+
     }
 }

@@ -21,17 +21,21 @@ import static PortManagement.Port.allPort;
 
 
 public class Main {
-    private static Port Port ;
+//    private static Port Port ;
     private static Scanner scanner = new Scanner(System.in);
+    Port Port = new Port(
+
+    );
     public Main() {
         // Initialize the readPorts object here or in the constructor
-        Port  = new Port();
-    } 
+//        Port  = new Port();
+    }
         public static void main (String[]args) {
 
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
+                displayWelcomeScreen();
                 displayMainMenu();
 
                 int choice = scanner.nextInt();
@@ -156,6 +160,8 @@ public class Main {
                             case 4:
 //                                calculateDistance();
                                 break;
+                            case 5:
+                                return;
                             default:
                                 System.out.println("Invalid Option!");
                         }
@@ -195,6 +201,8 @@ public class Main {
                             case 6:
 //                                CalculateWeight();
                                 break;
+                            case 7:
+                                return;
                             default:
                                 System.out.println("Invalid Option!");
                         }
@@ -222,6 +230,8 @@ public class Main {
                             case 3:
 //                                modifyVehicles();
                                 break;
+                            case 4:
+                                return;
                             default:
                                 System.out.println("Invalid Option!");
                         }
@@ -238,6 +248,8 @@ public class Main {
                             case 2:
 //                                EndTrip();
                                 break;
+                            case 3:
+                                return;
                         }
 
                     }
@@ -325,6 +337,8 @@ public class Main {
                             case 4:
 //                                calculateDistance();
                                 break;
+                            case 5:
+                                return;
                             default:
                                 System.out.println("Invalid Option!");
                         }
@@ -364,6 +378,8 @@ public class Main {
                             case 6:
 //                                CalculateWeight();
                                 break;
+                            case 7:
+                                return;
                             default:
                                 System.out.println("Invalid Option!");
                         }
@@ -435,6 +451,8 @@ public class Main {
                             case 2:
 //                                EndTrip();
                                 break;
+                            case 3:
+                                return;
                         }
 
                     }

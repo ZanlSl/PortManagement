@@ -24,7 +24,7 @@ public class Main {
     //    private static Port Port ;
 
     private static Scanner scanner = new Scanner(System.in);
-    PortManagementSystem PortManagementSystem = new PortManagementSystem();
+    static PortManagementSystem PortManagementSystem = new PortManagementSystem();
     public Main() {
         // Initialize the readPorts object here or in the constructor
 //        Port  = new Port();
@@ -326,12 +326,7 @@ public class Main {
 
                     switch (option) {
                         case 1:
-                            Main m = new Main();
-                            List<Port> list = m.PortManagementSystem.readPorts();
-
-                            for (Port Port : list) {
-                                System.out.println(Port);
-                            }
+//                            PortManagementSystem.addPort();
 
                             break;
                         case 2:

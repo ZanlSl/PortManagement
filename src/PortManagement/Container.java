@@ -132,14 +132,11 @@ public class Container implements ContainerInterface{
 
     @Override
     public String toString() {
-        return "Container{" +
-                "ID='" + ID + '\'' +
-                ", weight=" + weight +
-                ", type='" + type + '\'' +
-                ", shipFuelWeightKm=" + shipFuelWeightKm +
-                ", truckFuelWeightKm=" + truckFuelWeightKm +
-                ", position=" + (position) +
-                '}';
+        return  ID + ";" +
+                ";" + weight +
+                ";" + type + ";" + shipFuelWeightKm +
+                ";" + truckFuelWeightKm +
+                ";" + (position);
     }
 
     // getters and setters for each field can be added here

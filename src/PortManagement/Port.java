@@ -237,9 +237,7 @@ public class Port implements ContainerPosition, PortInterface {
 
     @Override
     public String toString() {
-        return "Port{" +
-
-                "ID='" + ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
+        return  ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
                 ";"+ containers +
                 ";"+ vehicles ;
 

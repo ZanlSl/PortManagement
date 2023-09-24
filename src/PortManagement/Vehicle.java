@@ -48,7 +48,11 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
     }
 
     public Vehicle(String id, String type, double carryingCapacity, double fuelCapacity, double currentFuel, String currentPort, String container) {
+
     }
+
+//    public Vehicle(String ID, String type , double carryingCapacity, double fuelCapacity, double currentFuel, String currentPort, String container ) {
+//    }
 
 
     public void moveTo(Port port){
@@ -201,15 +205,14 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
     }
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "ID='" + ID +
-                ", Type='" + Type  +
-                ", container=" + container +
-                ", carryingCapacity=" + carryingCapacity +
-                ", fuelCapacity=" + fuelCapacity +
-                ", currentFuel=" + currentFuel +
-                ", currentPort=" + currentPort+
-                '}';
+        return   ID +";"+
+                Type  +
+                ";"+ carryingCapacity +
+                ";"+ fuelCapacity +
+                ";"+ currentFuel +
+                ";"+ currentPort +
+                ";"+ container
+                ;
     }
 
     public void unload(Container container1) {

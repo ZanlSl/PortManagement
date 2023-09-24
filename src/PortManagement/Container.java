@@ -1,20 +1,48 @@
 package PortManagement;
 
-public class Container {
+import java.util.TreeMap;
+
+public class Container implements ContainerInterface{
     private String ID;
     private double weight;
     private String type;
     private double shipFuelWeightKm;
     private double truckFuelWeightKm;
+    private ContainerPosition position;
+    public static TreeMap<String, Container> allContainer = new TreeMap<>();
+    private static int idCounter;
 
-    public Container(String ID, double weight, String type) {
+
+
+    public Container(){
+        if (!allContainer.isEmpty()) {
+            String lastKey = allContainer.lastKey();
+            idCounter = Integer.parseInt(lastKey.substring(1));
+
+        } else
+            idCounter = 100;
+        this.ID = "c" + (++idCounter); // Increment the counter and prepend "Tr"
+        allContainer.put(this.ID, this); // Add the item to the map when it's created
+
+    }
+    public Container(String ID, double weight, String type, ContainerPosition position) {
         this.ID = ID;
         this.weight = weight;
         this.type = type;
+        this.position= position;
         setFuelWeightKm();
+        allContainer.put(this.ID, this); // Add the item to the map when it's created
+
+    }
+    public void setPosition(ContainerPosition position) {
+        this.position = position;
     }
 
-    private void setFuelWeightKm() {
+    public ContainerPosition getPosition() {
+        return this.position;
+    }
+
+    public void setFuelWeightKm() {
         switch (type) {
             case "DryStorage":
                 shipFuelWeightKm = 3.5;
@@ -40,7 +68,15 @@ public class Container {
                 System.out.println("Invalid container type");
         }
     }
-
+    public double totalWeightCalculateByType(String type){
+        double totalWeight = 0;
+        for (Container container : allContainer.values()) {
+            if (container.type.equals(type)) {
+                totalWeight += container.weight;
+            }
+        }
+        return totalWeight;
+    }
     public String getID() {
         return ID;
     }
@@ -63,6 +99,7 @@ public class Container {
 
     public void setType(String type) {
         this.type = type;
+        setFuelWeightKm();
     }
 
     public double getShipFuelWeightKm() {
@@ -81,6 +118,7 @@ public class Container {
         this.truckFuelWeightKm = truckFuelWeightKm;
     }
 
+
     @Override
     public String toString() {
         return "Container{" +
@@ -89,7 +127,10 @@ public class Container {
                 ", type='" + type + '\'' +
                 ", shipFuelWeightKm=" + shipFuelWeightKm +
                 ", truckFuelWeightKm=" + truckFuelWeightKm +
+                ", position=" + (position) +
                 '}';
     }
-    // getters and setters for each field can be added here
+
 }
+    // getters and setters for each field can be added here
+

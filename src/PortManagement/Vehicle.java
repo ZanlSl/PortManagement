@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 
-public class Vehicle implements ContainerPosition, VehicleInterface{
+public class Vehicle implements  VehicleInterface{
     private String ID;
     private String Type;
 
@@ -53,6 +53,10 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
         this.currentPort=port;
         port.addVehicle(this);
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     }
     public void checkFuel() {
         if (this.getCurrentFuel() < 2.0) {
@@ -104,7 +108,7 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
         if (container != null) {
             if (currentPort.getCurrentCapacity() + container.getWeight() <= currentPort.getTotalCapacity()) {
                 currentPort.addContainer(container);
-                container.setPosition(currentPort);
+                container.setPosition(currentPort.getId());
                 this.container = null;
             } else {
                 System.out.println("The port is at full capacity");
@@ -135,6 +139,9 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
         allVehicle.remove("temp");
 
 
+    }
+    public static ArrayList<Vehicle> getAllVehiclesAsList(){
+        return new ArrayList<>(allVehicle.values());
     }
 
     public String getType() {
@@ -190,11 +197,7 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
         return idCounter;
     }
 
-    @Override
-    public String getContainerPosition() {
-        return "Vehicle: " + Type +'\'' +
-                " ID: " + ID;
-    }
+
     @Override
     public String toString() {
         return "Vehicle{" +

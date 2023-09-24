@@ -21,46 +21,44 @@ import static PortManagement.Port.allPort;
 
 
 public class Main {
-//    private static Port Port ;
-    private static Scanner scanner = new Scanner(System.in);
-    Port Port = new Port(
+    //    private static Port Port ;
 
-    );
+    private static Scanner scanner = new Scanner(System.in);
+    PortManagementSystem PortManagementSystem = new PortManagementSystem();
     public Main() {
         // Initialize the readPorts object here or in the constructor
 //        Port  = new Port();
     }
-        public static void main (String[]args) {
+    public static void main (String[]args) {
+        Scanner scanner = new Scanner(System.in);
 
-            Scanner scanner = new Scanner(System.in);
+        while (true) {
+            displayWelcomeScreen();
+            displayMainMenu();
 
-            while (true) {
-                displayWelcomeScreen();
-                displayMainMenu();
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // consume newline
 
-                int choice = scanner.nextInt();
-                scanner.nextLine();  // consume newline
-
-                switch (choice) {
-                    case 1:
-                        // Handle user login
-                        loginUser();
-                        break;
-                    case 2:
-                        // Handle other functionalities like viewing ports, vehicles, etc.
-                        // For demonstration, I'm just showing a message.
-                        System.out.println("Functionality not yet implemented.");
-                        break;
-                    case 3:
-                        // Exit the application
-                        System.out.println("Exiting...");
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                }
+            switch (choice) {
+                case 1:
+                    // Handle user login
+                    loginUser();
+                    break;
+                case 2:
+                    // Handle other functionalities like viewing ports, vehicles, etc.
+                    // For demonstration, I'm just showing a message.
+                    System.out.println("Functionality not yet implemented.");
+                    break;
+                case 3:
+                    // Exit the application
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
     private static void displayWelcomeScreen() {
         System.out.println("COSC2081 GROUP ASSIGNMENT");
         System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
@@ -78,7 +76,7 @@ public class Main {
         System.out.println("=== Container Port Management System ===");
         System.out.println("1. Login");
         System.out.println("2. Exit");
-        System.out.print("Enter your choice: ");
+        System.out.print("Enter your choice(number): ");
     }
 
     private static void loginUser() {
@@ -86,7 +84,7 @@ public class Main {
 
         System.out.println("1. Login as System Admin");
         System.out.println("2. Login as Port Manager");
-        System.out.print("Enter your choice: ");
+        System.out.print("Enter your choice(number): ");
 
         int roleChoice;
         try {
@@ -104,16 +102,20 @@ public class Main {
         System.out.print("Password: ");
         // Note: For demonstration purposes only. Not a secure way to read passwords.
         String password = scanner.nextLine();
+        String user = null;
 
         // Hypothetical authentication logic.
         // In a real-world scenario, you'd validate the username and password against a database or data files.
         if (username.equals("admin") && password.equals("admin123") && roleChoice == 1) {
-            adminDashboard(); // Directly call the admin dashboard upon successful login as admin
+            user="admin";
+             // Directly call the admin dashboard upon successful login as admin
         } else if (username.equals("manager") && password.equals("manager123") && roleChoice == 2) {
-            managerDashboard(); // Directly call the manager dashboard upon successful login as manager
+            user="manager"; // Directly call the manager dashboard upon successful login as manager
         } else {
             System.out.println("Invalid credentials or role choice. Please try again.");
+            loginUser();
         }
+        chooseChoices(user);
     }
     private static void adminDashboard() {
         System.out.println("Welcome Admin! You can manage everything here.");
@@ -134,50 +136,15 @@ public class Main {
 
             switch (choice) {
                 case 1:
+
                     int option = scanner.nextInt();
-                    while (true) {
-                        System.out.println("1. Add Port");
-                        System.out.println("2. Remove Port");
-                        System.out.println("3. Modify Port");
-                        System.out.println("4. Calculate The Distance");
+                    System.out.println("1. Add Port");
+                    System.out.println("2. Remove Port");
+                    System.out.println("3. Modify Port");
+                    System.out.println("4. Calculate The Distance");
 
-                        switch (option) {
-                            case 1:
-                                Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
-
-                                for (Port Port : list) {
-                                    System.out.println(Port);
-                                }
-
-                                break;
-                            case 2:
-//                                removePort();
-                                break;
-                            case 3:
-//                                modifyPorts();
-                                break;
-                            case 4:
-//                                calculateDistance();
-                                break;
-                            case 5:
-                                return;
-                            default:
-                                System.out.println("Invalid Option!");
-                        }
-                    }
-                case 2:
-                    int option2 = scanner.nextInt();
-                    while (true){
-                        System.out.println("1. Add Container");
-                        System.out.println("2. Remove Container");
-                        System.out.println("3. Modify Container");
-                        System.out.println("4. Load Container");
-                        System.out.println("5. Unload Container");
-                        System.out.println("6. Calculate Weight Of Each Type");
-
-                        switch (option2) {
-                            case 1:
+                    switch (option) {
+                        case 1:
 //                                Main m = new Main();
 //                                List<Port> list = m.Port.readPorts();
 //
@@ -185,74 +152,112 @@ public class Main {
 //                                    System.out.println(Port);
 //                                }
 
-                                break;
-                            case 2:
+                            break;
+                        case 2:
+//                                removePort();
+                            break;
+                        case 3:
+//                                modifyPorts();
+                            break;
+                        case 4:
+//                                calculateDistance();
+                            break;
+                        case 5:
+                            return;
+                        default:
+                            System.out.println("Invalid Option!");
+                    }
+
+                case 2:
+
+                    int option2 = scanner.nextInt();
+
+                    System.out.println("1. Add Container");
+                    System.out.println("2. Remove Container");
+                    System.out.println("3. Modify Container");
+                    System.out.println("4. Load Container");
+                    System.out.println("5. Unload Container");
+                    System.out.println("6. Calculate Weight Of Each Type");
+
+                    switch (option2) {
+                        case 1:
+//                                Main m = new Main();
+//                                List<Port> list = m.Port.readPorts();
+//
+//                                for (Port Port : list) {
+//                                    System.out.println(Port);
+//                                }
+
+                            break;
+                        case 2:
 //                                removeContainer();
-                                break;
-                            case 3:
+                            break;
+                        case 3:
 //                                modifyContainers();
-                                break;
-                            case 4:
+                            break;
+                        case 4:
 //                                loadContainer();
-                                break;
-                            case 5:
+                            break;
+                        case 5:
 //                                UnloadContainer();
-                                break;
-                            case 6:
+                            break;
+                        case 6:
 //                                CalculateWeight();
-                                break;
-                            case 7:
-                                return;
-                            default:
-                                System.out.println("Invalid Option!");
-                        }
+                            break;
+                        case 7:
+                            return;
+                        default:
+                            System.out.println("Invalid Option!");
                     }
+
                 case 3:
+
                     int option3 = scanner.nextInt();
-                    while (true){
-                        System.out.println("1. Add Vehicle");
-                        System.out.println("2. Remove Vehicle");
-                        System.out.println("3. Modify Vehicle");
 
-                        switch (option3) {
-                            case 1:
-                                Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
+                    System.out.println("1. Add Vehicle");
+                    System.out.println("2. Remove Vehicle");
+                    System.out.println("3. Modify Vehicle");
 
-                                for (Port Port : list) {
-                                    System.out.println(Port);
-                                }
+                    switch (option3) {
+                        case 1:
+//                                Main m = new Main();
+//                                List<Port> list = m.Port.readPorts();
+//
+//                                for (Port Port : list) {
+//                                    System.out.println(Port);
+//                                }
 
-                                break;
-                            case 2:
+                            break;
+                        case 2:
 //                                removeVehicle();
-                                break;
-                            case 3:
+                            break;
+                        case 3:
 //                                modifyVehicles();
-                                break;
-                            case 4:
-                                return;
-                            default:
-                                System.out.println("Invalid Option!");
-                        }
+                            break;
+                        case 4:
+                            return;
+                        default:
+                            System.out.println("Invalid Option!");
                     }
-                case 4:
-                    int option4 = scanner.nextInt();
-                    while (true){
-                        System.out.println("1. Start Trip");
-                        System.out.println("2. End Trip");
-                        switch (option4){
-                            case 1:
-//                                StartTrip();
-                                break;
-                            case 2:
-//                                EndTrip();
-                                break;
-                            case 3:
-                                return;
-                        }
 
+                case 4:
+
+                    int option4 = scanner.nextInt();
+
+                    System.out.println("1. Start Trip");
+                    System.out.println("2. End Trip");
+                    switch (option4){
+                        case 1:
+//                                StartTrip();
+                            break;
+                        case 2:
+//                                EndTrip();
+                            break;
+                        case 3:
+                            return;
                     }
+
+
                 case 5:
                     System.out.println("Logging out...");
                     return;
@@ -311,50 +316,51 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    int option = scanner.nextInt();
-                    while (true) {
-                        System.out.println("1. Add Port");
-                        System.out.println("2. Remove Port");
-                        System.out.println("3. Modify Port");
-                        System.out.println("4. Calculate The Distance");
+                    Scanner scanner5 = new Scanner(System.in);
+                    int option = scanner5.nextInt();
 
-                        switch (option) {
-                            case 1:
-                                Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
+                    System.out.println("1. Add Port");
+                    System.out.println("2. Remove Port");
+                    System.out.println("3. Modify Port");
+                    System.out.println("4. Calculate The Distance");
 
-                                for (Port Port : list) {
-                                    System.out.println(Port);
-                                }
+                    switch (option) {
+                        case 1:
+                            Main m = new Main();
+                            List<Port> list = m.PortManagementSystem.readPorts();
 
-                                break;
-                            case 2:
+                            for (Port Port : list) {
+                                System.out.println(Port);
+                            }
+
+                            break;
+                        case 2:
 //                                removePort();
-                                break;
-                            case 3:
+                            break;
+                        case 3:
 //                                modifyPorts();
-                                break;
-                            case 4:
+                            break;
+                        case 4:
 //                                calculateDistance();
-                                break;
-                            case 5:
-                                return;
-                            default:
-                                System.out.println("Invalid Option!");
-                        }
+                            break;
+                        case 5:
+                            return;
+                        default:
+                            System.out.println("Invalid Option!");
                     }
+
                 case 2:
                     int option2 = scanner.nextInt();
-                    while (true){
-                        System.out.println("1. Add Container");
-                        System.out.println("2. Remove Container");
-                        System.out.println("3. Modify Container");
-                        System.out.println("4. Load Container");
-                        System.out.println("5. Unload Container");
-                        System.out.println("6. Calculate Weight Of Each Type");
 
-                        switch (option2) {
-                            case 1:
+                    System.out.println("1. Add Container");
+                    System.out.println("2. Remove Container");
+                    System.out.println("3. Modify Container");
+                    System.out.println("4. Load Container");
+                    System.out.println("5. Unload Container");
+                    System.out.println("6. Calculate Weight Of Each Type");
+
+                    switch (option2) {
+                        case 1:
 //                                Main m = new Main();
 //                                List<Port> list = m.Port.readPorts();
 //
@@ -362,28 +368,28 @@ public class Main {
 //                                    System.out.println(Port);
 //                                }
 
-                                break;
-                            case 2:
+                            break;
+                        case 2:
 //                                removeContainer();
-                                break;
-                            case 3:
+                            break;
+                        case 3:
 //                                modifyContainers();
-                                break;
-                            case 4:
+                            break;
+                        case 4:
 //                                loadContainer();
-                                break;
-                            case 5:
+                            break;
+                        case 5:
 //                                UnloadContainer();
-                                break;
-                            case 6:
+                            break;
+                        case 6:
 //                                CalculateWeight();
-                                break;
-                            case 7:
-                                return;
-                            default:
-                                System.out.println("Invalid Option!");
-                        }
+                            break;
+                        case 7:
+                            return;
+                        default:
+                            System.out.println("Invalid Option!");
                     }
+
                 case 3:
                     int option3 = scanner.nextInt();
                     while (true){
@@ -394,7 +400,7 @@ public class Main {
                         switch (option3) {
                             case 1:
                                 Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
+                                List<Port> list = m.PortManagementSystem.readPorts();
 
                                 for (Port Port : list) {
                                     System.out.println(Port);
@@ -439,31 +445,31 @@ public class Main {
 //                            System.out.println("Invalid choice. Please try again.");
 //                        }
 //                    }
-                case 4:
-                    int option4 = scanner.nextInt();
-                    while (true){
-                        System.out.println("1. Start Trip");
-                        System.out.println("2. End Trip");
-                        switch (option4){
-                            case 1:
-//                                StartTrip();
-                                break;
-                            case 2:
-//                                EndTrip();
-                                break;
-                            case 3:
-                                return;
-                        }
+                            case 4:
+                                int option4 = scanner.nextInt();
 
+                                System.out.println("1. Start Trip");
+                                System.out.println("2. End Trip");
+                                switch (option4){
+                                    case 1:
+//                                StartTrip();
+                                        break;
+                                    case 2:
+//                                EndTrip();
+                                        break;
+                                    case 3:
+                                        return;
+                                }
+
+
+                            case 5:
+                                System.out.println("Logging out...");
+                                return;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                        }
                     }
-                case 5:
-                    System.out.println("Logging out...");
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
             }
-        }
-    }
 
 //    private static void modifyPorts() {
 //        // Mock function. You would have real logic to add, remove, or modify port details.
@@ -524,9 +530,99 @@ public class Main {
 //            }
         }
     }
+
+
+    private static void chooseChoices(String user) {
+        System.out.println("=== Choose Choices ===");
+
+        System.out.println("1. Modify the data");
+        System.out.println("2. Function");
+        System.out.print("Enter your choice(number): ");
+
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        if (choice == 1) {
+            modifyOption(user);
+        } else if (choice==2) {
+            functionOption(user);
+        } else {
+            System.out.println("Invalid choice. Please enter 1 or 2.");
+            chooseChoices(user);
+        }
+    }
+
+    private static void modifyOption(String user) {
+        System.out.println("=== Modify Option ===");
+
+        if (user.equals("manager")) {
+            System.out.println("1. Container");
+            System.out.println("2. Trip");
+        } else if (user.equals("admin")) {
+            System.out.println("1. Container");
+            System.out.println("2. Trip");
+            System.out.println("3. Port");
+            System.out.println("4. Vehicle");
+        }
+
+        System.out.print("Enter your choice(number): ");
+
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch (choice) {
+            case 1:
+                modifyContainer();
+                break;
+            case 2:
+                // Code for 'Trip' option
+                break;
+            case 3:
+                if (user.equals("admin")) {
+                    // Code for 'Port' option
+                } else {
+                    System.out.println("Invalid choice for manager. Please enter a number between 1 and 2.");
+                    modifyOption(user);
+                }
+                break;
+            case 4:
+                if (user.equals("admin")) {
+                    // Code for 'Vehicle' option
+                } else {
+                    System.out.println("Invalid choice for manager. Please enter a number between 1 and 2.");
+                    modifyOption(user);
+                }
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter a valid number.");
+                modifyOption(user);
+                break;
+        }
+    }
+
+    public static void functionOption(String user){
+        System.out.println("=== Function Option ===");
+        System.out.println("1. Container");
+        System.out.println("2. Port");
+        System.out.println("3. Trip");
+        System.out.println("4. Vehicle");
+        System.out.print("Enter your choice(number): ");
+    }
 }
-
-
 
 
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 
 
-public class Port implements ContainerPosition, PortInterface {
+public class Port implements  PortInterface {
     private String ID;
 
     private String name;
@@ -57,7 +57,7 @@ public class Port implements ContainerPosition, PortInterface {
 
     public void load(Vehicle vehicle, Container container) {
         if (containers.contains(container)) {
-            container.setPosition(vehicle);
+            container.setPosition(vehicle.getID());
             vehicle.load(container);
             containers.remove(container);
             updateCurrentCapacity();
@@ -242,10 +242,5 @@ public class Port implements ContainerPosition, PortInterface {
 
 
 
-    @Override
-    public String getContainerPosition() {
-        return "Port: " + name +'\'' +
-        " ID: " + ID;
-    }
 
 }

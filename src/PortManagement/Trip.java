@@ -2,6 +2,7 @@ package PortManagement;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -131,6 +132,9 @@ public class Trip implements TripInterface{
         //add current time!!!
         this.arrivalTime = LocalDateTime.now();
 
+    }
+    public static ArrayList<Trip> getAllTripAsList(){
+        return new ArrayList<>(allTrip.values());
     }
 
     // getters and setters for each field can be added here

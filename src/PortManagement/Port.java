@@ -222,6 +222,9 @@ public class Port implements ContainerPosition, PortInterface {
     public double getTotalCapacity() {
         return totalCapacity;
     }
+    public static ArrayList<Port> getAllPortsAsList() {
+        return new ArrayList<>(allPort.values());
+    }
 
     @Override
     public String toString() {

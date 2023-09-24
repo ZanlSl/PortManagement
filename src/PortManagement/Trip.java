@@ -60,7 +60,10 @@ public class Trip implements TripInterface{
         this.estimatedFuel = estimatedFuel;
         this.vehicle = vehicle;
         this.container = container;
-        setStatusAuto();
+        if (arrivalTime==null){
+            this.currentStatus = TripStatus.ONGOING;
+        }else{  currentStatus = TripStatus.COMPLETED;}
+
         allTrip.put(this.ID, this); // Add the item to the map when it's created
 
 

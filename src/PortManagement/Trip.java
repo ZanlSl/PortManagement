@@ -20,7 +20,7 @@ public class Trip {
     private enum TripStatus {
 //        CANCELED,
         ONGOING,
-        COMPLETED
+        CANCELED, COMPLETED
     };
     public static TreeMap<String, Trip> allTrip = new TreeMap<>();
     private int idCounter;

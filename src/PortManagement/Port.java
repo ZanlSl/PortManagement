@@ -6,10 +6,16 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.List;
 
-public class Port {
-    private String Id;
+
+
+
+public class Port implements ContainerPosition, PortInterface {
+    private String ID;
+
     private String name;
     private double latitude;
     private double longitude;
@@ -18,29 +24,62 @@ public class Port {
     private boolean landingAbility;
     private ArrayList<Container> containers;
     private ArrayList<Vehicle> vehicles;
+    public static TreeMap<String, Port> allPort = new TreeMap<>();
+    private static int idCounter;
+    public Port(){
+        if (!allPort.isEmpty()) {
+            String lastKey = allPort.lastKey();
+            idCounter = Integer.parseInt(lastKey.substring(1));
+
+        } else
+            idCounter = 100;
+        this.ID = "P" + (++idCounter); // Increment the counter and prepend "Tr"
+        containers = new ArrayList<>();
+        vehicles = new ArrayList<>();
+        allPort.put(this.ID, this); // Add the item to the map when it's created
+
+
+    }
+
 
     public Port(String Id, String name, double latitude, double longitude, double totalCapacity, boolean landingAbility) {
-        this.Id = Id;
+        this.ID = ID;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.totalCapacity = totalCapacity;
         this.landingAbility = landingAbility;
-        this.containers = new ArrayList<>();
-        this.vehicles = new ArrayList<>();
+        containers = new ArrayList<>();
+        vehicles = new ArrayList<>();
         updateCurrentCapacity();
+        allPort.put(this.ID,this);
     }
-
-    public Port() {
-
+    public void listContainers() {
+        System.out.println("Listing all containers in the port:");
+        for (Container container : this.containers) {
+            System.out.println(container);
+        }}
+    public void listAllPort(){
+        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+            System.out.println("Port ID = " + entry.getKey() + ", Port = " + entry.getValue());
+        }
     }
+    public void listAllVehiclesOfType(String type){
+        System.out.println("Listing all vehicles of input in the port:");
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getType().equals(type)){
+                 System.out.println(vehicle);
+            }
+    }}
+
+
 
     public String getId() {
-        return Id;
+        return ID;
     }
 
     public void setId(String Id) {
-        this.Id = Id;
+        this.ID = Id;
     }
 
     public String getName() {
@@ -105,6 +144,7 @@ public class Port {
 
     public void load(Vehicle vehicle, Container container) {
         if (containers.contains(container)) {
+            container.setPosition(vehicle);
             vehicle.load(container);
             containers.remove(container);
             updateCurrentCapacity();
@@ -113,7 +153,7 @@ public class Port {
         }
     }
 
-    private void updateCurrentCapacity() {
+    public void updateCurrentCapacity() {
         currentCapacity = 0.0;
         for (Container container : containers) {
             currentCapacity += container.getWeight();
@@ -193,12 +233,23 @@ public class Port {
     @Override
     public String toString() {
         return "Port{" +
-                "ID='" + Id + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
+
+                "ID='" + ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
                 ";"+ containers +
                 ";"+ vehicles ;
 
     }
 
 
+
+
+
+
+
+    @Override
+    public String getContainerPosition() {
+        return "Port: " + name +'\'' +
+        " ID: " + ID;
+    }
 
 }

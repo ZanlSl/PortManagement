@@ -186,6 +186,10 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
         this.currentPort = currentPort;
     }
 
+    public static int getIdCounter() {
+        return idCounter;
+    }
+
     @Override
     public String getContainerPosition() {
         return "Vehicle: " + Type +'\'' +

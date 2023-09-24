@@ -126,6 +126,9 @@ public class Container implements ContainerInterface{
         this.truckFuelWeightKm = truckFuelWeightKm;
     }
 
+    public static int getIdCounter() {
+        return idCounter;
+    }
 
     @Override
     public String toString() {

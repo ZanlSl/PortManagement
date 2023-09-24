@@ -1,5 +1,7 @@
 package PortManagement;
 
+import java.util.ArrayList;
+
 public interface PortInterface {
     void listContainers();
     void listAllPort();
@@ -9,4 +11,6 @@ public interface PortInterface {
     void updateCurrentCapacity();
     void addContainer(Container container);
     double calculateDistance(Port other);
+    void removeVehicle(Vehicle vehicle);
+    void removeContainer(Container container);
 }

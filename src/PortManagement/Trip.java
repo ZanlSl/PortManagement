@@ -40,7 +40,7 @@ public class Trip implements TripInterface{
 //        } else {
 //            return;
 //        }
-
+        
 
         //!!! this shouldnt be here,
 
@@ -60,6 +60,10 @@ public class Trip implements TripInterface{
         this.estimatedFuel = estimatedFuel;
         this.vehicle = vehicle;
         this.container = container;
+        if (arrivalTime==null){
+            this.currentStatus = TripStatus.ONGOING;
+        }else{  currentStatus = TripStatus.COMPLETED;}
+
         allTrip.put(this.ID, this); // Add the item to the map when it's created
 
 
@@ -88,16 +92,7 @@ public class Trip implements TripInterface{
 
 
 
-    public void completeTrip(){
-        // Unload the Container from the Vehicle
-        this.vehicle.moveTo(to);
 
-        // Set the status of the trip to "completed"
-        this.currentStatus = TripStatus.COMPLETED;
-        //add current time!!!
-        this.arrivalTime = LocalDateTime.now();
-
-    }
     public void listAllTripHappeningAt(LocalDateTime inputTime){
 //        !!!
         for (Map.Entry<String, Trip> entry : Trip.allTrip.entrySet()) {
@@ -111,7 +106,32 @@ public class Trip implements TripInterface{
             }
 
         }}
+    public void setDistanceAuto(){
+        double distance = from.calculateDistance(to);
+        if (vehicle.getType().equals("ship")) {
+            estimatedFuel = distance * container.getShipFuelWeightKm();
+        } else {
+            estimatedFuel = distance * container.getTruckFuelWeightKm();
+        }
 
+    }
+    //!!!
+    public void startNewTrip(){
+            departTime=LocalDateTime.now();
+            vehicle.moveTo(null);
+            currentStatus=TripStatus.ONGOING;
+    }
+
+    public void completeTrip(){
+        // Unload the Container from the Vehicle
+        this.vehicle.moveTo(to);
+
+        // Set the status of the trip to "completed"
+        this.currentStatus = TripStatus.COMPLETED;
+        //add current time!!!
+        this.arrivalTime = LocalDateTime.now();
+
+    }
 
     // getters and setters for each field can be added here
 
@@ -129,11 +149,7 @@ public class Trip implements TripInterface{
 
 //    !!! the name of time variable
     public void setDepartTime(LocalDateTime departTime) {
-        if(LocalDateTime.now().isAfter( departTime)){
-            vehicle.getCurrentPort().removeVehicle(vehicle);
-            vehicle.moveTo(null);
-        }
-        else {return;}
+
         this.departTime = departTime;
     }
 
@@ -175,14 +191,9 @@ public class Trip implements TripInterface{
 
     public void setVehicle(Vehicle vehicle) {
         // Calculate the distance between the two ports
-        double distance = from.calculateDistance(to);
         this.vehicle = vehicle;
         // Calculate the estimated fuel based on the type of vehicle and the distance
-        if (vehicle.getType().equals("ship")) {
-            estimatedFuel = distance * container.getShipFuelWeightKm();
-        } else {
-            estimatedFuel = distance * container.getTruckFuelWeightKm();
-        }
+
     }
 
     public Container getContainer() {
@@ -199,6 +210,10 @@ public class Trip implements TripInterface{
 
     public void setCurrentStatus(TripStatus currentStatusStatus) {
         this.currentStatus = currentStatus;
+    }
+
+    public static int getIdCounter() {
+        return idCounter;
     }
 
     public static TreeMap<String, Trip> getAllTrip() {

@@ -53,10 +53,6 @@ public class Vehicle implements  VehicleInterface{
         this.currentPort=port;
         port.addVehicle(this);
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     }
     public void checkFuel() {
         if (this.getCurrentFuel() < 2.0) {

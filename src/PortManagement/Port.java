@@ -43,7 +43,7 @@ public class Port implements ContainerPosition, PortInterface {
 
 
     public Port(String Id, String name, double latitude, double longitude, double totalCapacity, boolean landingAbility) {
-        this.ID = ID;
+        this.ID = Id;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -205,16 +205,15 @@ public class Port implements ContainerPosition, PortInterface {
                     break;
                 }
                 String txt[] = line.split(";");
-                String ID = txt[0];
+                String Id = txt[0];
                 String name = txt[1];
                 double latitude = Double.parseDouble (txt [2]);
                 double longtitude = Double.parseDouble (txt [3]);
                 int totalCapacity = Integer.parseInt (txt [4]);
                 boolean landingAbility = Boolean.parseBoolean (txt[5]);
-                list.add(new Port(ID, name, latitude, longtitude, totalCapacity, landingAbility));
+                list.add(new Port(Id, name, latitude, longtitude, totalCapacity, landingAbility));
             }
-        }catch (Exception e){
-            throw new RuntimeException(e);}
+        }catch (Exception e){}
         return list;
 
     }

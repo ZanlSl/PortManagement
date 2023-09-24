@@ -40,7 +40,7 @@ public class Trip implements TripInterface{
 //        } else {
 //            return;
 //        }
-        
+
 
         //!!! this shouldnt be here,
 
@@ -130,6 +130,7 @@ public class Trip implements TripInterface{
 //    !!! the name of time variable
     public void setDepartTime(LocalDateTime departTime) {
         if(LocalDateTime.now().isAfter( departTime)){
+            vehicle.getCurrentPort().removeVehicle(vehicle);
             vehicle.moveTo(null);
         }
         else {return;}

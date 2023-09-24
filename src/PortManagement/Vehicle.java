@@ -53,6 +53,8 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
         this.currentPort=port;
         port.addVehicle(this);
 
+        if (port=null)
+
     }
     public void checkFuel() {
         if (this.getCurrentFuel() < 2.0) {

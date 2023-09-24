@@ -151,6 +151,10 @@ public class Port implements ContainerPosition, PortInterface {
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
     }
+    public void removeVehicle(Vehicle vehicle){
+        vehicles.remove(vehicle);
+
+    }
 
     public void load(Vehicle vehicle, Container container) {
         if (containers.contains(container)) {

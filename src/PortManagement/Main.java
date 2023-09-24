@@ -534,10 +534,9 @@ public class Main {
 
     private static void chooseChoices(String user) {
         System.out.println("=== Choose Choices ===");
-
         System.out.println("1. Modify the data");
         System.out.println("2. Function");
-        System.out.print("Enter your choice(number): ");
+        System.out.println("Enter your choice(number): ");
 
         int choice;
         try {
@@ -572,6 +571,37 @@ public class Main {
             System.out.println("4. Vehicle");
         }
 
+        System.out.println("Enter your choice(number): ");
+
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        if (choice == 1) {
+            ContainerModificationData();
+        } else if (choice==2) {
+            TripModificationData();
+        } else if (choice==3) {
+            PortModificationData();
+        } else if (choice==4) {
+            VehicleModificationData();
+        } else {
+            System.out.println("Invalid choice.");
+            chooseChoices(user);
+        }
+    }
+
+    private static void ContainerModificationData() {
+        System.out.println("=== Container Modification data ===");
+        System.out.println("1. Add container");
+        System.out.println("2. Remove container");
+        System.out.println("3. Modify existing data");
         System.out.print("Enter your choice(number): ");
 
         int choice;
@@ -584,33 +614,91 @@ public class Main {
             return; // Return to the main menu
         }
 
-        switch (choice) {
+        switch(choice){
             case 1:
-                modifyContainer();
                 break;
             case 2:
-                // Code for 'Trip' option
                 break;
             case 3:
-                if (user.equals("admin")) {
-                    // Code for 'Port' option
-                } else {
-                    System.out.println("Invalid choice for manager. Please enter a number between 1 and 2.");
-                    modifyOption(user);
-                }
+                return;
+        }
+
+    }
+
+    private static void TripModificationData() {
+        System.out.println("=== Trip Modification data ===");
+        System.out.println("1. Start trip");
+        System.out.println("2. End trip");
+        System.out.print("Enter your choice(number): ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
                 break;
-            case 4:
-                if (user.equals("admin")) {
-                    // Code for 'Vehicle' option
-                } else {
-                    System.out.println("Invalid choice for manager. Please enter a number between 1 and 2.");
-                    modifyOption(user);
-                }
+            case 2:
                 break;
-            default:
-                System.out.println("Invalid choice. Please enter a valid number.");
-                modifyOption(user);
+            case 3:
+                return;
+        }
+    }
+
+    private static void PortModificationData() {
+        System.out.println("=== Port Modification data ===");
+        System.out.println("1. Add port");
+        System.out.println("2. Remove port");
+        System.out.println("3. Modify existing data");
+        System.out.print("Enter your choice(number): ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
                 break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
+    }
+
+    private static void VehicleModificationData() {
+        System.out.println("=== Vehicle Modification data ===");
+        System.out.println("1. Add vehicle");
+        System.out.println("2. Remove vehicle");
+        System.out.println("3. Modify existing data");
+        System.out.print("Enter your choice(number): ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
         }
     }
 
@@ -621,8 +709,134 @@ public class Main {
         System.out.println("3. Trip");
         System.out.println("4. Vehicle");
         System.out.print("Enter your choice(number): ");
+
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        if (choice == 1) {
+            ContainerFunctionData();
+        } else if (choice==2) {
+            TripFunctionData();
+        } else if (choice==3) {
+            PortFunctionData();
+        } else if (choice==4) {
+            VehicleFunctionData();
+        } else {
+            System.out.println("Invalid choice.");
+            chooseChoices(user);
+        }
+    }
+
+    private static void ContainerFunctionData() {
+        System.out.println("=== Container Function ===");
+        System.out.println("1. Load container");
+        System.out.println("2. Unload container");
+        System.out.println("3. Calculate weight of each type");
+        System.out.print("Enter your choice(number): ");
+
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
+
+    }
+
+    private static void TripFunctionData() {
+        System.out.println("=== Trip Function ===");
+        System.out.println("1. Start trip");
+        System.out.println("2. End trip");
+        System.out.println("2. Search trip");
+        System.out.print("Enter your choice(number): ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
+    }
+
+    private static void PortFunctionData() {
+        System.out.println("=== Port Function ===");
+        System.out.println("1. Calculate distance");
+        System.out.print("Enter your choice(number): ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
+    }
+
+    private static void VehicleFunctionData() {
+        System.out.println("=== Vehicle Function ===");
+        System.out.println("1. Move Port");
+        System.out.println("2. Load container");
+        System.out.println("3. Unload container");
+        System.out.println("4. Refuel");
+        System.out.print("Enter your choice(number): ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+        } catch (InputMismatchException e) {
+            System.out.println("Please enter a valid number.");
+            scanner.nextLine(); // Clear the invalid input
+            return; // Return to the main menu
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                return;
+        }
     }
 }
-
-
 

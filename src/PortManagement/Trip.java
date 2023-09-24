@@ -35,21 +35,13 @@ public class Trip implements TripInterface{
         this.ID = "Trip" + (++idCounter); // Increment the counter and prepend "Tr"
         // If the vehicle doesn't have the container, try to load it
         //!!! this shouldnt be here,
-        if (vehicle.getContainer()!=null) {
-            from.load(vehicle, container);
-        } else {
-            return;
-        }
+//        if (vehicle.getContainer()!=null) {
+//            from.load(vehicle, container);
+//        } else {
+//            return;
+//        }
+        
 
-        // Calculate the distance between the two ports
-        double distance = from.calculateDistance(to);
-
-        // Calculate the estimated fuel based on the type of vehicle and the distance
-        if (vehicle.getType().equals("ship")) {
-            estimatedFuel = distance * container.getShipFuelWeightKm();
-        } else {
-            estimatedFuel = distance * container.getTruckFuelWeightKm();
-        }
         //!!! this shouldnt be here,
 
         currentStatus = TripStatus.ONGOING;
@@ -181,7 +173,15 @@ public class Trip implements TripInterface{
     }
 
     public void setVehicle(Vehicle vehicle) {
+        // Calculate the distance between the two ports
+        double distance = from.calculateDistance(to);
         this.vehicle = vehicle;
+        // Calculate the estimated fuel based on the type of vehicle and the distance
+        if (vehicle.getType().equals("ship")) {
+            estimatedFuel = distance * container.getShipFuelWeightKm();
+        } else {
+            estimatedFuel = distance * container.getTruckFuelWeightKm();
+        }
     }
 
     public Container getContainer() {
@@ -204,9 +204,6 @@ public class Trip implements TripInterface{
         return allTrip;
     }
 
-    public static void setAllTrip(TreeMap<String, Trip> allTrip) {
-        Trip.allTrip = allTrip;
-    }
 
     @Override
     public String toString() {

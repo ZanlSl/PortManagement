@@ -52,7 +52,6 @@ public class PortManagementSystem {
                         BufferedWriter bw = new BufferedWriter(fw);
                         for (Container Container: list){
                                 bw.write(Container.toString());
-                                bw.write();
                                 bw.newLine();
                         }
                         bw.close();

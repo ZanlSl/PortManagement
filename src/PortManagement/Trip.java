@@ -90,7 +90,17 @@ public class Trip implements TripInterface{
 
 
 
+    public static ArrayList<Trip> getOngoingTrips() {
+        ArrayList<Trip> ongoingTrips = new ArrayList<>();
 
+        for (Trip trip : allTrip.values()) {
+            if (trip.currentStatus == TripStatus.ONGOING) {
+                ongoingTrips.add(trip);
+            }
+        }
+
+        return ongoingTrips;
+    }
 
 
 
@@ -126,7 +136,7 @@ public class Trip implements TripInterface{
     public void completeTrip(){
         // Unload the Container from the Vehicle
         this.vehicle.moveTo(to);
-
+        this.vehicle.unload();
         // Set the status of the trip to "completed"
         this.currentStatus = TripStatus.COMPLETED;
         //add current time!!!

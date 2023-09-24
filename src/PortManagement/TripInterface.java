@@ -8,5 +8,8 @@ public interface TripInterface {
     void listAllTripHappeningAt(LocalDateTime inputTime);
     void setDistanceAuto();
     void startNewTrip();
+    void setFrom(Port from);
+    void setTo(Port to);
+    void setContainer(Container container);
 
 }

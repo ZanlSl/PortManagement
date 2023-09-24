@@ -16,8 +16,10 @@ import java.util.*;
 // Importing required classes
 
 
+import static PortManagement.Container.allContainer;
 import static PortManagement.Port.allPort;
-
+import static PortManagement.Trip.allTrip;
+import static PortManagement.Vehicle.allVehicle;
 
 
 public class Main {
@@ -601,7 +603,6 @@ public class Main {
         System.out.println("=== Container Modification data ===");
         System.out.println("1. Add container");
         System.out.println("2. Remove container");
-        System.out.println("3. Modify existing data");
         System.out.print("Enter your choice(number): ");
 
         int choice;
@@ -613,16 +614,101 @@ public class Main {
             scanner.nextLine(); // Clear the invalid input
             return; // Return to the main menu
         }
-
+//        String a= "DryStorage";
+//        String b="OpenTop";
+//        String c="OpenSide";
+//        String d="Refrigerated";
+//        String e="Liquid";
         switch(choice){
             case 1:
-                break;
+               AddContainer();
             case 2:
-                break;
-            case 3:
-                return;
+                RemoveContainer();
+
         }
 
+    }
+    private static void AddContainer() {
+        new Container();
+        String id = "c" + Container.getIdCounter();
+        System.out.println("Enter it's weight:");
+        double weight = scanner.nextDouble();
+        allContainer.get(id).setWeight(weight);
+        System.out.println("Choose the type(number):");
+        System.out.println("1.DryStorage");
+        System.out.println("2.OpenTop");
+        System.out.println("3.OpenSide");
+        System.out.println("4.Refrigerated");
+        System.out.println("5.Liquid");
+        int i;
+        do {
+            System.out.println("Please enter a number:");
+            try {
+                i = scanner.nextInt();
+                if (i >= 1 && i <= 5) {
+                    break;  // If the input is valid, break the loop
+                } else {
+                    System.out.println("The number is not in the range from 1 to 5. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("That's not a valid number. Please try again.");
+                scanner.next();  // Discard the invalid input
+            }
+        } while (true);
+        switch (i) {
+            case 1:
+                allContainer.get(id).setType("DryStorage");
+            case 2:
+                allContainer.get(id).setType("OpenTop");
+
+            case 3:
+                allContainer.get(id).setType("OpenSide");
+            case 4:
+                allContainer.get(id).setType("Refrigerated");
+            case 5:
+                allContainer.get(id).setType("Liquid");
+
+        }
+        if (allPort != null){
+            System.out.println("Where is it now? Enter a port or a vehicle ID:");
+            System.out.println("Ports: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                System.out.print( entry.getKey()+"," +"/t");
+            }
+            System.out.println("Vehicle: ");
+            for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
+                System.out.print( entry.getKey()+"," +"/t");
+            }
+            String posi= scanner.nextLine();
+            allContainer.get(id).setPosition(posi);
+            if (posi.charAt(0) == 'P') {
+                allPort.get(posi).addContainer(allContainer.get(id));
+            } else {
+                allVehicle.get(posi).setContainer(allContainer.get(id));
+            }}
+
+        System.out.println("added:"+  allContainer.get(id));
+
+
+    }
+    private static void RemoveContainer(){
+        if (allContainer != null){
+            System.out.println("Containers: ");
+            for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
+                System.out.print( entry.getKey()+"," +"/t");
+            }
+            System.out.println("Enter the ID of the container:");
+            String id = scanner.nextLine();
+//            if (allContainer.get(id).getPosition().charAt(0) == 'P'){
+//                allPort.get(allContainer.get(id).getPosition()).removeContainer((allContainer.get(id)));
+//            }else{allVehicle.get(allContainer.get(id).getPosition()).setContainer(null);}
+
+                allContainer.remove(id);
+            System.out.println("Removed"+id);
+
+        }else{System.out.println("No container to remove");
+
+        }
     }
 
     private static void TripModificationData() {
@@ -640,21 +726,82 @@ public class Main {
             return; // Return to the main menu
         }
 
+
         switch(choice){
             case 1:
-                break;
+                StartTrip();
+
             case 2:
-                break;
-            case 3:
-                return;
+                EndTrip();
+
         }
     }
+    private static void StartTrip(){
 
+
+        System.out.println("Ports available: ");
+        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+            System.out.print(entry.getKey() + "," + "/t");
+        }
+        System.out.println("Enter the starting Port:");
+        String from=scanner.nextLine();
+        System.out.println("Enter the destination Port:");
+        String to=scanner.nextLine();
+        for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
+            System.out.print(entry.getKey() + "," + "/t");
+        }
+        System.out.println("Enter the vehicle:");
+        String vehicle=scanner.nextLine();
+        System.out.println("Containers available: ");
+        for (Container container : allPort.get(from).getContainers()) {
+            System.out.println(container);
+        }
+        System.out.println("Enter the container:");
+        String container=scanner.nextLine();
+
+
+        if (vehicle.charAt(0)=='t' && allPort.get(from).isLandingAbility() ==false ||allPort.get(to).isLandingAbility() ==false){
+            System.out.println("The Port entered can't be reach by truck");
+            return;
+        };
+        if(allPort.get(from).getVehicles().contains(allContainer.get(vehicle))){
+            System.out.println("This vehicle isn't here");
+            return;
+        }
+        if(!allPort.get(from).getContainers().contains(allContainer.get(container))){
+            System.out.println("This container isn't here");
+            return;
+        }
+
+        new Trip();
+
+        String id = "Trip" + Trip.getIdCounter();
+        allTrip.get(id).startNewTrip();
+        allTrip.get(id).setContainer(allContainer.get(container));
+        allPort.get(from).load(allVehicle.get(vehicle),allContainer.get(container));
+        allTrip.get(id).setFrom(allPort.get(to));
+        allTrip.get(id).setTo(allPort.get(to));
+
+
+
+    }
+    private static void EndTrip(){
+        if (!Trip.getOngoingTrips().isEmpty()) {
+            System.out.println("Trips ongoing: ");
+            for (Trip trip : Trip.getOngoingTrips()) {
+                System.out.print(trip + "," + "/t");
+            }
+            System.out.println("Enter the tripID you want to end:");
+            String ongoingtrip = scanner.nextLine();
+            allTrip.get(ongoingtrip).completeTrip();
+        }else {
+            System.out.println("no ongoing trip");
+        }
+    }
     private static void PortModificationData() {
         System.out.println("=== Port Modification data ===");
         System.out.println("1. Add port");
         System.out.println("2. Remove port");
-        System.out.println("3. Modify existing data");
         System.out.print("Enter your choice(number): ");
         int choice;
         try {
@@ -668,19 +815,64 @@ public class Main {
 
         switch(choice){
             case 1:
-                break;
+                AddPort();
             case 2:
-                break;
-            case 3:
-                return;
+                RemovePort();
+
         }
     }
+    private static void AddPort(){
+    new Port();
 
+// Create a Scanner object for user input
+    String id = "P" + Container.getIdCounter();
+
+// Ask the user for input and set the values
+    System.out.print("Enter port name (String): ");
+    String name = scanner.nextLine();
+    allPort.get(id).setName(name);
+
+    System.out.print("Enter latitude (double): ");
+    double latitude = scanner.nextDouble();
+    allPort.get(id).setLatitude(latitude);
+
+    System.out.print("Enter longitude (double): ");
+    double longitude = scanner.nextDouble();
+    allPort.get(id).setLongitude(longitude);
+
+    System.out.print("Enter total capacity (double): ");
+    double totalCapacity = scanner.nextDouble();
+    allPort.get(id).setTotalCapacity(totalCapacity);
+
+    System.out.print("Enter landing ability (boolean): ");
+    boolean landingAbility = scanner.nextBoolean();
+    allPort.get(id).setLandingAbility(landingAbility);
+
+
+    }
+    private static void RemovePort() {
+        if (allPort != null) {
+            System.out.println("Ports: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                System.out.print(entry.getKey() + "," + "/t");
+            }
+            System.out.println("Enter the ID of the container:");
+            String id = scanner.nextLine();
+            if (allPort.get(id).getContainers()!=null){
+                for(Container container : allPort.get(id).getContainers()){
+                container.setPosition(null);
+            }}
+            allPort.remove(id);
+            System.out.println("Removed" + id);
+
+        } else {
+            System.out.println("No Port to remove");
+        }
+    }
     private static void VehicleModificationData() {
         System.out.println("=== Vehicle Modification data ===");
         System.out.println("1. Add vehicle");
         System.out.println("2. Remove vehicle");
-        System.out.println("3. Modify existing data");
         System.out.print("Enter your choice(number): ");
         int choice;
         try {
@@ -694,14 +886,57 @@ public class Main {
 
         switch(choice){
             case 1:
-                break;
+                AddVehicle();
             case 2:
-                break;
-            case 3:
-                return;
+                RemoveVehicle();
+
         }
     }
+    public static void AddVehicle(){
+        new Vehicle();
 
+
+
+// Ask the user for input and set the values
+        System.out.print("Enter vehicle type (String): ");
+        String type = scanner.nextLine();
+        allVehicle.get("temp").setType(type);
+
+        String id = "P" + Container.getIdCounter();
+
+        System.out.print("Enter fuel capacity (double): ");
+        double fuelCapacity = scanner.nextDouble();
+        allVehicle.get(id).setFuelCapacity(fuelCapacity);
+
+        System.out.print("Enter current fuel capacity (double): ");
+        double currentfuel = scanner.nextDouble();
+        allVehicle.get(id).setCurrentFuel(currentfuel);
+
+
+        System.out.print("Enter carrying capacity (double): ");
+        double carryingCapacity = scanner.nextDouble();
+        allVehicle.get(id).setCarryingCapacity(carryingCapacity);
+
+
+
+    }
+
+    public static void RemoveVehicle(){
+        System.out.println("Ports: ");
+     if(allVehicle!=null){
+        for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
+            System.out.print(entry.getKey() + "," + "/t");
+        }
+        System.out.println("Enter the ID of the Vehicle:");
+        String id = scanner.nextLine();
+    if (allVehicle.get(id).getContainer()!=null){
+        allVehicle.get(id).getContainer().setPosition(null);}
+        System.out.println("Removed" + id );
+
+    } else {
+        System.out.println("No Vehicle to remove");
+    }
+        }
     public static void functionOption(String user){
         System.out.println("=== Function Option ===");
         System.out.println("1. Container");
@@ -753,6 +988,7 @@ public class Main {
 
         switch(choice){
             case 1:
+
                 break;
             case 2:
                 break;

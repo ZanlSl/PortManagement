@@ -27,7 +27,7 @@ public class Container implements ContainerInterface{
 
         } else
             idCounter = 100;
-        this.ID = "c" + (++idCounter); // Increment the counter and prepend "Tr"
+        this.ID = "c" + (++idCounter); // Increment the counter and prepend "c"
         allContainer.put(this.ID, this); // Add the item to the map when it's created
 
     }

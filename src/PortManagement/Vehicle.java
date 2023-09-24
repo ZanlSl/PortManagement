@@ -49,6 +49,7 @@ public class Vehicle implements  VehicleInterface{
 
 
 
+
     public void moveTo(Port port){
         this.currentPort=port;
         port.addVehicle(this);
@@ -146,6 +147,7 @@ public class Vehicle implements  VehicleInterface{
 
     public void setType(String type) {
         Type = type;
+        setID();
     }
 
 

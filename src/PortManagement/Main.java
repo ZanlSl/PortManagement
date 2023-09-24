@@ -23,9 +23,7 @@ import static PortManagement.Port.allPort;
 public class Main {
 //    private static Port Port ;
     private static Scanner scanner = new Scanner(System.in);
-    Port Port = new Port(
-
-    );
+    static PortManagementSystem PortManagementSystem = new PortManagementSystem();
     public Main() {
         // Initialize the readPorts object here or in the constructor
 //        Port  = new Port();
@@ -143,12 +141,7 @@ public class Main {
 
                         switch (option) {
                             case 1:
-                                Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
 
-                                for (Port Port : list) {
-                                    System.out.println(Port);
-                                }
 
                                 break;
                             case 2:
@@ -217,7 +210,7 @@ public class Main {
                         switch (option3) {
                             case 1:
                                 Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
+                                List<Port> list = m.PortManagementSystem.readPorts();
 
                                 for (Port Port : list) {
                                     System.out.println(Port);
@@ -321,7 +314,7 @@ public class Main {
                         switch (option) {
                             case 1:
                                 Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
+                                List<Port> list = m.PortManagementSystem.readPorts();
 
                                 for (Port Port : list) {
                                     System.out.println(Port);
@@ -394,7 +387,7 @@ public class Main {
                         switch (option3) {
                             case 1:
                                 Main m = new Main();
-                                List<Port> list = m.Port.readPorts();
+                                List<Port> list = m.PortManagementSystem.readPorts();
 
                                 for (Port Port : list) {
                                     System.out.println(Port);

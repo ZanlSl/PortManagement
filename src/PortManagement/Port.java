@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,6 +54,14 @@ public class Port implements ContainerPosition, PortInterface {
         vehicles = new ArrayList<>();
         updateCurrentCapacity();
         allPort.put(this.ID,this);
+    }
+    private LocalDateTime timestamp;
+    public Port(String name, double latitude, double longtitude, double totalCapacity, boolean landingAbility) {
+        this.timestamp = LocalDateTime.now();
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public void load(Vehicle vehicle, Container container) {
@@ -244,7 +253,7 @@ public class Port implements ContainerPosition, PortInterface {
 
     @Override
     public String getContainerPosition() {
-        return "Port: " + name +'\'' +
+        return "Port: " + name +';' +
         " ID: " + ID;
     }
 

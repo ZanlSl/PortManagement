@@ -47,13 +47,15 @@ public class Vehicle implements ContainerPosition, VehicleInterface{
 
     }
 
+    public Vehicle(String id, String type, double carryingCapacity, double fuelCapacity, double currentFuel, String currentPort, String container) {
+    }
 
 
     public void moveTo(Port port){
         this.currentPort=port;
         port.addVehicle(this);
 
-        if (port=null)
+//        if (port=null)
 
     }
     public void checkFuel() {

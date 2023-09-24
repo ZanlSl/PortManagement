@@ -42,6 +42,7 @@ public class Port implements ContainerPosition, PortInterface {
     }
 
 
+
     public Port(String Id, String name, double latitude, double longitude, double totalCapacity, boolean landingAbility) {
         this.ID = Id;
         this.name = name;
@@ -71,6 +72,15 @@ public class Port implements ContainerPosition, PortInterface {
                  System.out.println(vehicle);
             }
     }}
+    public static void removePort(String id) {
+        if (allPort.containsKey(id)) {
+            allPort.remove(id);
+            System.out.println("Port with ID: " + id + " has been removed.");
+        } else {
+            System.out.println("No port found with ID: " + id);
+        }
+    }
+
 
 
 
@@ -178,21 +188,7 @@ public class Port implements ContainerPosition, PortInterface {
         double distance = R * c;
         return distance;
     }
-    public static void writePorts(List<Port> list, String file) {
-        try {
-            FileWriter fw = new FileWriter("data.txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            for (Port Port: list){
-                bw.write(Port.toString());
-                bw.newLine();
-            }
-            bw.close();
-            fw.close();
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public static List<Port> readPorts() {
         List<Port> list= new ArrayList<>();
         try {
@@ -216,6 +212,21 @@ public class Port implements ContainerPosition, PortInterface {
         }catch (Exception e){}
         return list;
 
+    }
+    public static void writePorts(List<Port> list, String file) {
+        try {
+            FileWriter fw = new FileWriter("data.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Port Port: list){
+                bw.write(Port.toString());
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

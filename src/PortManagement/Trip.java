@@ -61,26 +61,17 @@ public class Trip implements TripInterface{
         this.estimatedFuel = estimatedFuel;
         this.vehicle = vehicle;
         this.container = container;
-        if (arrivalTime==null){
+        if (arrivalTime == null) {
             this.currentStatus = TripStatus.ONGOING;
-        }else{  currentStatus = TripStatus.COMPLETED;}
+        } else {
+            currentStatus = TripStatus.COMPLETED;
+        }
 
         allTrip.put(this.ID, this); // Add the item to the map when it's created
 
+    }
 
-
-
-//        // If the estimated fuel exceeds the current fuel of the vehicle, print a message
-//
-//            allTrip.put(ID, this);
-//            if (!allTrip.isEmpty()) {
-//                String lastKey = allTrip.lastKey();
-//                idCounter = Integer.parseInt(lastKey.substring(2));
-
-
-            }
-
-    public void getTripsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
+    public static void getTripsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
         for (Trip trip : allTrip.values()) {
             if ((trip.departTime.isAfter(startDate) || trip.departTime.isEqual(startDate)) &&
                     (trip.arrivalTime.isBefore(endDate) || trip.arrivalTime.isEqual(endDate))) {
@@ -104,7 +95,7 @@ public class Trip implements TripInterface{
 
 
 
-    public void listAllTripHappeningAt(LocalDateTime inputTime){
+    public static void listAllTripHappeningAt(LocalDateTime inputTime){
 //        !!!
         for (Map.Entry<String, Trip> entry : Trip.allTrip.entrySet()) {
             Trip trip = entry.getValue();
@@ -161,7 +152,6 @@ public class Trip implements TripInterface{
         return departTime;
     }
 
-//    !!! the name of time variable
     public void setDepartTime(LocalDateTime departTime) {
 
         this.departTime = departTime;

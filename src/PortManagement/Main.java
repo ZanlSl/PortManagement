@@ -1,4 +1,7 @@
 package PortManagement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 
@@ -737,8 +740,6 @@ public class Main {
         }
     }
     private static void StartTrip(){
-
-
         System.out.println("Ports available: ");
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
             System.out.print(entry.getKey() + "," + "/t");
@@ -747,8 +748,9 @@ public class Main {
         String from=scanner.nextLine();
         System.out.println("Enter the destination Port:");
         String to=scanner.nextLine();
-        for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
-            System.out.print(entry.getKey() + "," + "/t");
+        System.out.println("Vehicle available: ");
+        for (Vehicle vehicle : allPort.get(from).getVehicles() ) {
+            System.out.println(vehicle);
         }
         System.out.println("Enter the vehicle:");
         String vehicle=scanner.nextLine();
@@ -758,13 +760,11 @@ public class Main {
         }
         System.out.println("Enter the container:");
         String container=scanner.nextLine();
-
-
         if (vehicle.charAt(0)=='t' && allPort.get(from).isLandingAbility() ==false ||allPort.get(to).isLandingAbility() ==false){
             System.out.println("The Port entered can't be reach by truck");
             return;
         };
-        if(allPort.get(from).getVehicles().contains(allContainer.get(vehicle))){
+        if(!allPort.get(from).getVehicles().contains(allContainer.get(vehicle))){
             System.out.println("This vehicle isn't here");
             return;
         }
@@ -772,19 +772,27 @@ public class Main {
             System.out.println("This container isn't here");
             return;
         }
-
+        if(allVehicle.get(vehicle).getContainer()!=null) {
+            System.out.println("This vehicle is having a container");
+            return;
+        }
         new Trip();
-
         String id = "Trip" + Trip.getIdCounter();
+
+        allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));
+        if (allVehicle.get(vehicle).getContainer() == null) {
+            allTrip.remove(id);
+            return;
+        }
+
         allTrip.get(id).startNewTrip();
         allTrip.get(id).setContainer(allContainer.get(container));
-        allPort.get(from).load(allVehicle.get(vehicle),allContainer.get(container));
         allTrip.get(id).setFrom(allPort.get(to));
         allTrip.get(id).setTo(allPort.get(to));
 
 
+        }
 
-    }
     private static void EndTrip(){
         if (!Trip.getOngoingTrips().isEmpty()) {
             System.out.println("Trips ongoing: ");
@@ -889,20 +897,47 @@ public class Main {
                 AddVehicle();
             case 2:
                 RemoveVehicle();
+            default:
+                System.out.println("Invalid choice. Returning to main menu.");
+                return;
 
         }
     }
     public static void AddVehicle(){
         new Vehicle();
 
+        Scanner scanner = new Scanner(System.in);
+// Display the menu
+        System.out.println("Enter the Vehicle's Type:");
+        System.out.println("1. Ship");
+        System.out.println("2. Truck");
+        System.out.println("3. Reefer Truck");
+        System.out.println("4. Tanker Truck");
 
+// Get the user's choice
+        int choice = scanner.nextInt();
 
-// Ask the user for input and set the values
-        System.out.print("Enter vehicle type (String): ");
-        String type = scanner.nextLine();
-        allVehicle.get("temp").setType(type);
+// Convert the choice to a vehicle type
+        String type;
+        switch (choice) {
+            case 1:
+                type = "ship";
+                break;
+            case 2:
+                type = "truck";
+                break;
+            case 3:
+                type = "reefer_truck";
+                break;
+            case 4:
+                type = "tanker_truck";
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                return;
+        }
+        String id =allVehicle.get("temp").setType(type);
 
-        String id = "P" + Container.getIdCounter();
 
         System.out.print("Enter fuel capacity (double): ");
         double fuelCapacity = scanner.nextDouble();
@@ -916,6 +951,24 @@ public class Main {
         System.out.print("Enter carrying capacity (double): ");
         double carryingCapacity = scanner.nextDouble();
         allVehicle.get(id).setCarryingCapacity(carryingCapacity);
+
+        System.out.println("Ports available: ");
+        int a =0;
+        for (Port port : allPort.values()) {
+            if (type!="ship"&& port.isLandingAbility()) {
+                a+=1;
+                System.out.println(port.getId()+","+"/t ");
+            } else if (type=="ship") {
+                a+=1;
+            }
+        }
+        if (a==0){
+            System.out.println("There is no Port available");
+            return;
+        }
+        System.out.print("Enter it's current position (Port ID): ");
+        String position = scanner.nextLine();
+        allVehicle.get(id).moveTo(allPort.get(position));
 
 
 
@@ -942,7 +995,6 @@ public class Main {
         System.out.println("1. Container");
         System.out.println("2. Port");
         System.out.println("3. Trip");
-        System.out.println("4. Vehicle");
         System.out.print("Enter your choice(number): ");
 
         int choice;
@@ -961,8 +1013,6 @@ public class Main {
             TripFunctionData();
         } else if (choice==3) {
             PortFunctionData();
-        } else if (choice==4) {
-            VehicleFunctionData();
         } else {
             System.out.println("Invalid choice.");
             chooseChoices(user);
@@ -988,21 +1038,82 @@ public class Main {
 
         switch(choice){
             case 1:
-
+                LoadContainer();
                 break;
             case 2:
-                break;
-            case 3:
+                UnLoad();
+            default:
+                System.out.println("Invalid choice. Returning to main menu.");
                 return;
+
         }
 
     }
+    public static void LoadContainer(){
+        System.out.println("Ports available: ");
+        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+            System.out.print(entry.getKey() + "," + "/t");
+        }
+        System.out.println("Enter the Port:");
+        String from=scanner.nextLine();
+
+        System.out.println("Vehicle available: ");
+        for (Vehicle vehicle : allPort.get(from).getVehicles() ) {
+            System.out.println(vehicle);
+        }
+        System.out.println("Enter the vehicle:");
+        String vehicle=scanner.nextLine();
+        System.out.println("Containers available: ");
+        for (Container container : allPort.get(from).getContainers()) {
+            System.out.println(container);
+        }
+        System.out.println("Enter the container:");
+        String container=scanner.nextLine();
+
+
+        if(!allPort.get(from).getVehicles().contains(allContainer.get(vehicle))){
+            System.out.println("This vehicle isn't here");
+            return;
+        }
+        if(!allPort.get(from).getContainers().contains(allContainer.get(container))){
+            System.out.println("This container isn't here");
+            return;
+        }
+        if(allVehicle.get(vehicle).getContainer()!=null) {
+            System.out.println("This vehicle is having a container");
+            return;
+        }
+
+
+
+        allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));
+        System.out.print("Function complete");
+
+    }
+    private static void UnLoad(){
+        System.out.println("Vehicle available: ");
+        int a =0;
+
+        for (Vehicle vehicle : allVehicle.values()) {
+            if (vehicle.getContainer() != null && vehicle.getContainer().getPosition()!=null) {
+                a+=1;
+                System.out.println(vehicle.getID()+"is having Container: "+vehicle.getContainer().getID() +" at "+vehicle.getContainer().getPosition());
+            }
+        }
+        if (a==0){
+            System.out.println("There is no vahicle available");
+            return;
+        }
+        System.out.println("Enter the vehicle");
+        String vehical=scanner.nextLine();
+        allVehicle.get(vehical).unload();
+    }
+
 
     private static void TripFunctionData() {
         System.out.println("=== Trip Function ===");
-        System.out.println("1. Start trip");
-        System.out.println("2. End trip");
-        System.out.println("2. Search trip");
+        System.out.println("1. Search trip by a date");
+        System.out.println("2. Search trip between days");
         System.out.print("Enter your choice(number): ");
         int choice;
         try {
@@ -1013,20 +1124,58 @@ public class Main {
             scanner.nextLine(); // Clear the invalid input
             return; // Return to the main menu
         }
+        // Ask the user for input
+        System.out.print("Enter a date (format: yyyy-mm-dd): ");
+        String input = scanner.nextLine();
+
+// Parse the input into a LocalDate
+        LocalDate date;
+        try {
+            date = LocalDate.parse(input);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Please enter a date in the format yyyy-mm-dd.");
+            return;
+        }
+
+// Convert the LocalDate to a LocalDateTime at the start of the day
+        LocalDateTime dateTime = date.atStartOfDay();
+
+        System.out.println("You entered: " + dateTime);
 
         switch(choice){
             case 1:
-                break;
+
+                Trip.listAllTripHappeningAt(dateTime);
             case 2:
-                break;
-            case 3:
+                // Ask the user for input
+                System.out.print("Enter another date after the date you just entered (format: yyyy-mm-dd): ");
+                String input1 = scanner.nextLine();
+
+// Parse the input into a LocalDate
+                LocalDate date1;
+                try {
+                    date1 = LocalDate.parse(input1);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter a date in the format yyyy-mm-dd.");
+                    return;
+                }
+
+// Convert the LocalDate to a LocalDateTime at the start of the day
+                LocalDateTime dateTime1 = date1.atStartOfDay();
+
+                System.out.println("You entered: " + dateTime1);
+                Trip.getTripsBetweenDates(dateTime,dateTime1);
+            default:
+                System.out.println("Invalid choice. Returning to main menu.");
                 return;
         }
     }
 
     private static void PortFunctionData() {
         System.out.println("=== Port Function ===");
-        System.out.println("1. Calculate distance");
+        System.out.println("1. List al vehicle of type:");
+
+
         System.out.print("Enter your choice(number): ");
         int choice;
         try {
@@ -1037,10 +1186,48 @@ public class Main {
             scanner.nextLine(); // Clear the invalid input
             return; // Return to the main menu
         }
+        System.out.println("Ports available: ");
+        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+            System.out.print(entry.getKey() + "," + "/t");
+        }
+        String port=scanner.nextLine();
 
         switch(choice){
             case 1:
-                break;
+
+                Scanner scanner = new Scanner(System.in);
+// Display the menu
+                System.out.println("Enter the Vehicle's Type:");
+                System.out.println("1. Ship");
+                System.out.println("2. Truck");
+                System.out.println("3. Reefer Truck");
+                System.out.println("4. Tanker Truck");
+
+// Get the user's choice
+                int choice1 = scanner.nextInt();
+
+// Convert the choice to a vehicle type
+                String type;
+                switch (choice1) {
+                    case 1:
+                        type = "ship";
+                        break;
+                    case 2:
+                        type = "truck";
+                        break;
+                    case 3:
+                        type = "reefer_truck";
+                        break;
+                    case 4:
+                        type = "tanker_truck";
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                        return;
+                }
+                allPort.get(port).listAllVehiclesOfType(type);
+
+
             case 2:
                 break;
             case 3:

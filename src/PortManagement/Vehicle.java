@@ -134,7 +134,7 @@ public class Vehicle implements  VehicleInterface{
 
         } else
             idCounter = 100;
-        if (this.Type.equals("Ship")){
+        if (this.Type.equals("ship")){
             this.ID = "sh" + (++idCounter); // Increment the counter and prepend "Tr"
 
         }else {
@@ -153,9 +153,10 @@ public class Vehicle implements  VehicleInterface{
         return Type;
     }
 
-    public void setType(String type) {
+    public String setType(String type) {
         Type = type;
         setID();
+        return this.ID;
     }
 
 

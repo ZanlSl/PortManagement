@@ -5,6 +5,6 @@ public interface VehicleInterface {
     void checkFuel();
     void reFuel(double fuelAmount);
     void unload();
-    void setType(String type);
+    String setType(String type);
 
 }

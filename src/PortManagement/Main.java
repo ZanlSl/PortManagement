@@ -675,8 +675,7 @@ public class Main {
             }
         }
         scanner.nextLine();  // Consume the leftover newline
-
-            String posi= scanner.nextLine();
+        String posi= scanner.nextLine();
         allContainer.get(id).setPosition(posi);
         if (posi.charAt(0) == 'P') {
             allPort.get(posi).addContainer(allContainer.get(id));

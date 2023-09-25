@@ -772,14 +772,14 @@ public class Main {
             System.out.println("This container isn't here");
             return;
         }
-        if(allVehicle.get(vehicle).getContainer()!=null) {
+        if(allVehicle.get(vehicle).getContainer()!=null && allVehicle.get(vehicle).getContainer().getID() != allContainer.get(container).getID()) {
             System.out.println("This vehicle is having a container");
             return;
         }
         new Trip();
         String id = "Trip" + Trip.getIdCounter();
-
-        allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));
+        if (allVehicle.get(vehicle).getContainer().getID() != allContainer.get(container).getID()){
+            allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));}
         if (allVehicle.get(vehicle).getContainer() == null) {
             allTrip.remove(id);
             return;

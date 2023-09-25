@@ -138,7 +138,7 @@ public class Vehicle implements  VehicleInterface {
         }else {
             this.ID = "tr" + (++idCounter); // Increment the counter and prepend "Tr"
         }
-        System.out.println("thisID"+this.ID);
+        System.out.println("thisID is:"+this.ID);
         allVehicle.put( this.ID, allVehicle.get("temp"));
         allVehicle.remove("temp");
 

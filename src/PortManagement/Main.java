@@ -837,7 +837,7 @@ public class Main {
     new Port();
 
 // Create a Scanner object for user input
-    String id = "P" + Container.getIdCounter();
+    String id = "P" + Port.getIdCounter();
 
 // Ask the user for input and set the values
     System.out.print("Enter port name (String): ");

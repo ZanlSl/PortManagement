@@ -137,7 +137,7 @@ public class Container implements ContainerInterface{
     @Override
     public String toString() {
         return  ID + ";" +
-                ";" + weight +
+                 weight +
                 ";" + type + ";" + shipFuelWeightKm +
                 ";" + truckFuelWeightKm +
                 ";" + (position);

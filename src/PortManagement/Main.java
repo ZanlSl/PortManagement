@@ -331,13 +331,6 @@ public class Main {
 
                     switch (option) {
                         case 1:
-                            PortManagement.PortManagementSystem.addPort();
-                            Main m = new Main();
-                            List<Port> list = m.PortManagementSystem.readPorts();
-
-                            for (Port Port : list) {
-                                System.out.println(Port);
-                            }
 
                             break;
                         case 2:
@@ -400,13 +393,7 @@ public class Main {
 
                         switch (option3) {
                             case 1:
-                                PortManagement.PortManagementSystem.addVehicle();
-                                Main m = new Main();
-                                List<Vehicle> list = m.PortManagementSystem.readVehicles();
-
-                                for (Vehicle o : list) {
-                                    System.out.println(o);
-                                }
+                                
 
                                 break;
                             case 2:
@@ -971,6 +958,7 @@ public class Main {
         List<Vehicle> list = new ArrayList<>();
         Vehicle vehicle = new Vehicle(id,type,carryingCapacity,fuelCapacity,currentfuel,null,null);
         list.add(vehicle);
+        PortManagement.PortManagementSystem.writeVehicles(list,"vehicles.txt");
 
 
     }

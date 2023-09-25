@@ -63,9 +63,12 @@ public class PortManagementSystem {
                 System.out.print("Enter the current fuel for the new vehicle: ");
                 double currentFuel = scanner.nextDouble();
                 System.out.print("Enter the current port for the new vehicle: ");
-                String currentPort = scanner.nextLine();
+                int currentPortID = scanner.nextInt();
                 System.out.print("Enter the container for the new vehicle: ");
-                String container = scanner.nextLine();
+                int containerID = scanner.nextInt();
+
+                Port currentPort = Port.getAllPortsAsList().get(currentPortID);
+                Container container = Container.getAllContainersAsList().get(containerID);
                 Vehicle vehicle = new Vehicle(ID, type, carryingCapacity ,fuelCapacity, currentFuel, currentPort, container);
                 list.add(vehicle);
                 PortManagementSystem.writeVehicles(list, "vehicles.txt");
@@ -148,7 +151,7 @@ public class PortManagementSystem {
                                 FileReader fr = new FileReader("vehicles.txt");
                                 BufferedReader br = new BufferedReader(fr);
                                 String line = "";
-                                while (true){
+                                while (true) {
                                         line = br.readLine();
                                         if (line == null) {
                                                 break;
@@ -156,14 +159,37 @@ public class PortManagementSystem {
                                         String[] txt = line.split(";");
                                         String ID = txt[0];
                                         String Type = txt[1];
-                                        String container =  (txt [2]);
-                                        double carryingCapacity = Double.parseDouble (txt [3]);
-                                        double fuelCapacity = Double.parseDouble (txt [4]);
-                                        double currentFuel = Double.parseDouble (txt [5]);
-                                        String currentPort = (txt [6]);
+                                        String containerID = (txt[2]);
+                                        double carryingCapacity = Double.parseDouble(txt[3]);
+                                        double fuelCapacity = Double.parseDouble(txt[4]);
+                                        double currentFuel = Double.parseDouble(txt[5]);
+                                        String currentPortID = (txt[6]);
 
 
-                                        list.add(new Vehicle(ID, Type , carryingCapacity,  fuelCapacity,  currentFuel, currentPort, container));
+                                        Port currentPort = null;
+                                        for (Port port : Port.getAllPortsAsList()) {
+                                                if (port.getId().equals(currentPortID)) {
+                                                        currentPort = port;
+                                                        break;
+                                                }
+                                        }
+
+                                        Container container = null;
+                                        for (Container c : Container.getAllContainersAsList()) {
+                                                if (c.getID().equals(containerID)) {
+                                                        container = c;
+                                                        break;
+                                                }
+                                        }
+
+                                        if (currentPort != null && container != null) {
+                                                list.add(new Vehicle(ID, Type, carryingCapacity, fuelCapacity, currentFuel, currentPort, container));
+                                        } else {
+                                                // Handle cases where Port or Container objects are not found
+
+
+                                                list.add(new Vehicle(ID, Type, carryingCapacity, fuelCapacity, currentFuel, currentPort, container));
+                                        }
                                 }
                         }catch (Exception e){}
                         return list;
@@ -180,7 +206,7 @@ public class PortManagementSystem {
                                 if (line == null) {
                                         break;
                                 }
-                                String txt[] = line.split(";");
+                                String[] txt = line.split(";");
                                 String ID = txt[0];
                                 double weight = Double.parseDouble(txt[1]);
                                 String type = txt [2];

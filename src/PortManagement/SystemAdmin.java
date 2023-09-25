@@ -1,5 +1,7 @@
 package PortManagement;
 
+import java.util.HashMap;
+
 // Class representing the System Administrator
 class SystemAdmin implements User {
    private HashMap<String, String> userCredentials; // Store user credentials (username and password)

@@ -47,9 +47,9 @@ public class Vehicle implements  VehicleInterface{
 
     }
 
-    public Vehicle(String id, String type, double carryingCapacity, double fuelCapacity, double currentFuel, String currentPort, String container) {
-
-    }
+//    public Vehicle(String id, String type, double carryingCapacity, double fuelCapacity, double currentFuel, String currentPort, String container) {
+//
+//    }
 
 //    public Vehicle(String ID, String type , double carryingCapacity, double fuelCapacity, double currentFuel, String currentPort, String container ) {
 //    }

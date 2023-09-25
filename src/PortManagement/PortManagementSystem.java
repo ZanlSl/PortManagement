@@ -18,31 +18,25 @@ public class PortManagementSystem {
         List<Trip> trips = new ArrayList<>();
         static List<Port> list = new ArrayList<>();
         private static final Scanner scanner = new Scanner(System.in);
-//        public static void addPort() {
-//
-//                LocalDateTime now = LocalDateTime.now();
-//                LocalDateTime threshold = now.minusDays(7); // Calculate the threshold date
-//
-//                // Remove the record if it's older than 7 days
-//                list.removeIf(port -> port.getTimestamp().isBefore(threshold));
-//
-//                List<Port> list = new ArrayList<>();
-//                System.out.print("Enter the Id for the new port: ");
-//                String ID = scanner.nextLine();
-//                System.out.print("Enter the name for the new port: ");
-//                String name = scanner.nextLine();
-//                System.out.print("Enter the latitude for the new port: ");
-//                double latitude = scanner.nextDouble();
-//                System.out.print("Enter the longitude for the new port: ");
-//                double longtitude = scanner.nextDouble();
-//                System.out.print("Enter the total capacity for the new port: ");
-//                double totalCapacity = scanner.nextDouble();
-//                System.out.print("Enter the landing ability for the new port: ");
-//                boolean landingAbility = scanner.nextBoolean();
-//                Port port = new Port(ID, name, latitude, longtitude, totalCapacity, landingAbility);
-//                list.add(port);
-//                PortManagementSystem.writePorts(list, "ports.txt");
-//        }
+        public static void addPort() {
+
+                List<Port> list = new ArrayList<>();
+                System.out.print("Enter the Id for the new port: ");
+                String ID = scanner.nextLine();
+                System.out.print("Enter the name for the new port: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter the latitude for the new port: ");
+                double latitude = scanner.nextDouble();
+                System.out.print("Enter the longitude for the new port: ");
+                double longtitude = scanner.nextDouble();
+                System.out.print("Enter the total capacity for the new port: ");
+                double totalCapacity = scanner.nextDouble();
+                System.out.print("Enter the landing ability for the new port: ");
+                boolean landingAbility = scanner.nextBoolean();
+                Port port = new Port(ID, name, latitude, longtitude, totalCapacity, landingAbility);
+                list.add(port);
+                PortManagementSystem.writePorts(list, "ports.txt");
+        }
         public static void addVehicle() {
 
 //                LocalDateTime now = LocalDateTime.now();
@@ -67,11 +61,32 @@ public class PortManagementSystem {
                 System.out.print("Enter the container for the new vehicle: ");
                 int containerID = scanner.nextInt();
 
-                Port currentPort = Port.getAllPortsAsList().get(currentPortID);
-                Container container = Container.getAllContainersAsList().get(containerID);
-                Vehicle vehicle = new Vehicle(ID, type, carryingCapacity ,fuelCapacity, currentFuel, currentPort, container);
+
+
+//                Port currentPort = Port.getAllPortsAsList().get(currentPortID);
+//                Container container = Container.getAllContainersAsList().get(containerID);
+                Vehicle vehicle = new Vehicle(ID, type, carryingCapacity ,fuelCapacity, currentFuel, null, null);
                 list.add(vehicle);
                 PortManagementSystem.writeVehicles(list, "vehicles.txt");
+        }
+        public static void addContainer() {
+
+                List<Container> list = new ArrayList<>();
+                System.out.print("Enter the Id for the new container: ");
+                String ID = scanner.nextLine();
+                System.out.print("Enter the name for the new container: ");
+                String type = scanner.nextLine();
+                System.out.print("Enter the latitude for the new container: ");
+                double weight = scanner.nextDouble();
+                System.out.print("Enter the fuel Capacity for the new container: ");
+                double fuelCapacity = scanner.nextDouble();
+                System.out.print("Enter the current fuel for the new container: ");
+                double currentFuel = scanner.nextDouble();
+                System.out.print("Enter the position for the new container: ");
+                String position = scanner.nextLine();
+                Container container = new Container(ID,weight, type, fuelCapacity, currentFuel, position);
+                list.add(container);
+                PortManagementSystem.writeContainers(list, "containers.txt");
         }
 
         public static void writePorts(List<Port> list, String file) {
@@ -91,7 +106,7 @@ public class PortManagementSystem {
         }
         public static void writeVehicles(List<Vehicle> list, String file) {
                 try {
-                        FileWriter fw = new FileWriter("vehicles.txt");
+                        FileWriter fw = new FileWriter("vehicles.txt",true);
                         BufferedWriter bw = new BufferedWriter(fw);
                         for (Vehicle Vehicle: list){
                                 bw.write(Vehicle.toString());
@@ -159,37 +174,15 @@ public class PortManagementSystem {
                                         String[] txt = line.split(";");
                                         String ID = txt[0];
                                         String Type = txt[1];
-                                        String containerID = (txt[2]);
-                                        double carryingCapacity = Double.parseDouble(txt[3]);
-                                        double fuelCapacity = Double.parseDouble(txt[4]);
-                                        double currentFuel = Double.parseDouble(txt[5]);
+
+                                        double carryingCapacity = Double.parseDouble(txt[2]);
+                                        double fuelCapacity = Double.parseDouble(txt[3]);
+                                        double currentFuel = Double.parseDouble(txt[4]);
+                                        String containerID = (txt[5]);
                                         String currentPortID = (txt[6]);
 
+                                        list.add(new Vehicle(ID, Type, carryingCapacity, fuelCapacity, currentFuel, null, null));
 
-                                        Port currentPort = null;
-                                        for (Port port : Port.getAllPortsAsList()) {
-                                                if (port.getId().equals(currentPortID)) {
-                                                        currentPort = port;
-                                                        break;
-                                                }
-                                        }
-
-                                        Container container = null;
-                                        for (Container c : Container.getAllContainersAsList()) {
-                                                if (c.getID().equals(containerID)) {
-                                                        container = c;
-                                                        break;
-                                                }
-                                        }
-
-                                        if (currentPort != null && container != null) {
-                                                list.add(new Vehicle(ID, Type, carryingCapacity, fuelCapacity, currentFuel, currentPort, container));
-                                        } else {
-                                                // Handle cases where Port or Container objects are not found
-
-
-                                                list.add(new Vehicle(ID, Type, carryingCapacity, fuelCapacity, currentFuel, currentPort, container));
-                                        }
                                 }
                         }catch (Exception e){}
                         return list;

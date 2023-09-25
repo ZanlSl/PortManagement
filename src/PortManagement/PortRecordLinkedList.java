@@ -40,12 +40,12 @@ public class PortRecordLinkedList {
 
 
 
-//        Main m = new Main();
-//        List<Port> list = m.PortManagementSystem.readPorts();
-//
-//        for (Port o : list) {
-//            System.out.println(o);
-//        }
-        PortManagementSystem.addVehicle();
+        Main m = new Main();
+        List<Vehicle> list = m.PortManagementSystem.readVehicles();
+
+        for (Vehicle o : list) {
+            System.out.println(o);
+        }
+//        PortManagementSystem.addVehicle();
     }
 }

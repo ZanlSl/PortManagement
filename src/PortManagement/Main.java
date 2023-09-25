@@ -27,43 +27,12 @@ import static PortManagement.Vehicle.allVehicle;
 
 public class Main {
     //    private static Port Port ;
+    public static HashMap<LocalDateTime, Double> fuelUsedInADay;
 
+    // Add a key-value pair to the map
+    public static LocalDateTime today = LocalDate.now().atStartOfDay();
     private static Scanner scanner = new Scanner(System.in);
     PortManagementSystem PortManagementSystem = new PortManagementSystem();
-    public Main() {
-        // Initialize the readPorts object here or in the constructor
-//        Port  = new Port();
-    }
-    public static void main (String[]args) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            displayWelcomeScreen();
-            displayMainMenu();
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // consume newline
-
-            switch (choice) {
-                case 1:
-                    // Handle user login
-                    loginUser();
-                    break;
-                case 2:
-                    // Handle other functionalities like viewing ports, vehicles, etc.
-                    // For demonstration, I'm just showing a message.
-                    System.out.println("Functionality not yet implemented.");
-                    break;
-                case 3:
-                    // Exit the application
-                    System.out.println("Exiting...");
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
     private static void displayWelcomeScreen() {
         System.out.println("COSC2081 GROUP ASSIGNMENT");
         System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
@@ -525,6 +494,8 @@ public class Main {
         System.out.println("=== Choose Choices ===");
         System.out.println("1. Modify the data");
         System.out.println("2. Function");
+        System.out.println("3.Exit application");
+
         System.out.println("Enter your choice(number): ");
 
         int choice;
@@ -541,7 +512,10 @@ public class Main {
             modifyOption(user);
         } else if (choice==2) {
             functionOption(user);
-        } else {
+        } else if (choice==3) {
+            System.out.println("Exiting...");
+            System.exit(0);
+        }else {
             System.out.println("Invalid choice. Please enter 1 or 2.");
             chooseChoices(user);
         }
@@ -574,6 +548,7 @@ public class Main {
 
         if (choice == 1) {
             ContainerModificationData();
+            chooseChoices(user);
         } else if (choice==2) {
             TripModificationData();
         } else if (choice==3) {
@@ -609,8 +584,14 @@ public class Main {
         switch(choice){
             case 1:
                AddContainer();
+               scanner.nextLine();  // Consume the leftover newline
+
+                break;
             case 2:
                 RemoveContainer();
+                scanner.nextLine();  // Consume the leftover newline
+
+                break;
 
         }
 
@@ -645,44 +626,57 @@ public class Main {
         switch (i) {
             case 1:
                 allContainer.get(id).setType("DryStorage");
+                break;
             case 2:
                 allContainer.get(id).setType("OpenTop");
+                break;
 
             case 3:
                 allContainer.get(id).setType("OpenSide");
+                break;
+
             case 4:
                 allContainer.get(id).setType("Refrigerated");
+                break;
+
             case 5:
                 allContainer.get(id).setType("Liquid");
+                break;
+
 
         }
-        if (allPort != null){
+        if (allPort != null && !allPort.isEmpty()){
             System.out.println("Where is it now? Enter a port or a vehicle ID:");
             System.out.println("Ports: ");
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-                System.out.print( entry.getKey()+"," +"/t");
+                System.out.print( entry.getKey()+"," +"\t");
             }
-            System.out.println("Vehicle: ");
+            if (allVehicle != null && !allVehicle.isEmpty()){
+
+                System.out.println("Vehicle: ");
             for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
-                System.out.print( entry.getKey()+"," +"/t");
+                System.out.print(entry.getKey() + "," + "\t");
             }
+        }
+        scanner.nextLine();  // Consume the leftover newline
+
             String posi= scanner.nextLine();
-            allContainer.get(id).setPosition(posi);
-            if (posi.charAt(0) == 'P') {
-                allPort.get(posi).addContainer(allContainer.get(id));
-            } else {
-                allVehicle.get(posi).setContainer(allContainer.get(id));
-            }}
+        allContainer.get(id).setPosition(posi);
+        if (posi.charAt(0) == 'P') {
+            allPort.get(posi).addContainer(allContainer.get(id));
+        } else {
+            allVehicle.get(posi).setContainer(allContainer.get(id));
+        }}
 
         System.out.println("added:"+  allContainer.get(id));
 
 
     }
     private static void RemoveContainer(){
-        if (allContainer != null){
+        if (allContainer != null && !allContainer.isEmpty()){
             System.out.println("Containers: ");
             for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
-                System.out.print( entry.getKey()+"," +"/t");
+                System.out.print( entry.getKey()+"," +"\t");
             }
             System.out.println("Enter the ID of the container:");
             String id = scanner.nextLine();
@@ -717,16 +711,20 @@ public class Main {
         switch(choice){
             case 1:
                 StartTrip();
+                scanner.nextLine();  // Consume the leftover newline
+
+                break;
 
             case 2:
                 EndTrip();
+                scanner.nextLine();  // Consume the leftover newline
 
         }
     }
     private static void StartTrip(){
         System.out.println("Ports available: ");
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-            System.out.print(entry.getKey() + "," + "/t");
+            System.out.print(entry.getKey() + "," + "\t");
         }
         System.out.println("Enter the starting Port:");
         String from=scanner.nextLine();
@@ -756,14 +754,14 @@ public class Main {
             System.out.println("This container isn't here");
             return;
         }
-        if(allVehicle.get(vehicle).getContainer()!=null) {
+        if(allVehicle.get(vehicle).getContainer()!=null && allVehicle.get(vehicle).getContainer().getID() != allContainer.get(container).getID()) {
             System.out.println("This vehicle is having a container");
             return;
         }
         new Trip();
         String id = "Trip" + Trip.getIdCounter();
-
-        allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));
+        if (allVehicle.get(vehicle).getContainer().getID() != allContainer.get(container).getID()){
+            allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));}
         if (allVehicle.get(vehicle).getContainer() == null) {
             allTrip.remove(id);
             return;
@@ -781,7 +779,7 @@ public class Main {
         if (!Trip.getOngoingTrips().isEmpty()) {
             System.out.println("Trips ongoing: ");
             for (Trip trip : Trip.getOngoingTrips()) {
-                System.out.print(trip + "," + "/t");
+                System.out.print(trip + "," + "\t");
             }
             System.out.println("Enter the tripID you want to end:");
             String ongoingtrip = scanner.nextLine();
@@ -808,8 +806,14 @@ public class Main {
         switch(choice){
             case 1:
                 AddPort();
+                scanner.nextLine();  // Consume the leftover newline
+
+                break;
             case 2:
                 RemovePort();
+                scanner.nextLine();  // Consume the leftover newline
+
+
 
         }
     }
@@ -817,7 +821,7 @@ public class Main {
     new Port();
 
 // Create a Scanner object for user input
-    String id = "P" + Container.getIdCounter();
+    String id = "P" + Port.getIdCounter();
 
 // Ask the user for input and set the values
     System.out.print("Enter port name (String): ");
@@ -845,10 +849,10 @@ public class Main {
         PortManagement.PortManagementSystem.writePorts(list, "ports.txt");
     }
     private static void RemovePort() {
-        if (allPort != null) {
+        if (allPort != null && !allPort.isEmpty()){
             System.out.println("Ports: ");
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-                System.out.print(entry.getKey() + "," + "/t");
+                System.out.print(entry.getKey() + "," + "\t");
             }
             System.out.println("Enter the ID of the container:");
             String id = scanner.nextLine();
@@ -881,8 +885,14 @@ public class Main {
         switch(choice){
             case 1:
                 AddVehicle();
+                scanner.nextLine();  // Consume the leftover newline
+
+                break;
             case 2:
                 RemoveVehicle();
+                scanner.nextLine();  // Consume the leftover newline
+
+                break;
             default:
                 System.out.println("Invalid choice. Returning to main menu.");
                 return;
@@ -925,13 +935,14 @@ public class Main {
         String id =allVehicle.get("temp").setType(type);
 
 
+
         System.out.print("Enter fuel capacity (double): ");
         double fuelCapacity = scanner.nextDouble();
         allVehicle.get(id).setFuelCapacity(fuelCapacity);
 
-        System.out.print("Enter current fuel capacity (double): ");
+        System.out.print("Enter current fuel capacity-must be smaller than it's capacity (double): ");
         double currentfuel = scanner.nextDouble();
-        allVehicle.get(id).setCurrentFuel(currentfuel);
+        allVehicle.get(id).reFuel(currentfuel);
 
 
         System.out.print("Enter carrying capacity (double): ");
@@ -943,7 +954,7 @@ public class Main {
         for (Port port : allPort.values()) {
             if (type!="ship"&& port.isLandingAbility()) {
                 a+=1;
-                System.out.println(port.getId()+","+"/t ");
+                System.out.println(port.getId()+","+"\t" );
             } else if (type=="ship") {
                 a+=1;
             }
@@ -951,7 +962,12 @@ public class Main {
         if (a==0){
             System.out.println("There is no Port available");
             return;
+        }else {
+            System.out.print("Enter it's current position (Port ID): ");
+            String position = scanner.nextLine();
+            allVehicle.get(id).moveTo(allPort.get(position));
         }
+
         System.out.print("Enter it's current position (Port ID): ");
         String position = scanner.nextLine();
         allVehicle.get(id).moveTo(allPort.get(position));
@@ -961,19 +977,22 @@ public class Main {
         PortManagement.PortManagementSystem.writeVehicles(list,"vehicles.txt");
 
 
+
+
+
     }
 
     public static void RemoveVehicle(){
-        System.out.println("Ports: ");
-     if(allVehicle!=null){
+        System.out.println("Vehicles: ");
+        if (allVehicle != null && !allVehicle.isEmpty()){
         for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
-            System.out.print(entry.getKey() + "," + "/t");
+            System.out.print(entry.getKey() + "," + "\t");
         }
         System.out.println("Enter the ID of the Vehicle:");
         String id = scanner.nextLine();
     if (allVehicle.get(id).getContainer()!=null){
         allVehicle.get(id).getContainer().setPosition(null);}
-        System.out.println("Removed" + id );
+        System.out.println("Removed " + id );
 
     } else {
         System.out.println("No Vehicle to remove");
@@ -1028,9 +1047,13 @@ public class Main {
         switch(choice){
             case 1:
                 LoadContainer();
+                scanner.nextLine();  // Consume the leftover newline
+
                 break;
             case 2:
                 UnLoad();
+                scanner.nextLine();  // Consume the leftover newline
+
             default:
                 System.out.println("Invalid choice. Returning to main menu.");
                 return;
@@ -1041,7 +1064,7 @@ public class Main {
     public static void LoadContainer(){
         System.out.println("Ports available: ");
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-            System.out.print(entry.getKey() + "," + "/t");
+            System.out.print(entry.getKey() + "," + "\t");
         }
         System.out.println("Enter the Port:");
         String from=scanner.nextLine();
@@ -1135,6 +1158,9 @@ public class Main {
             case 1:
 
                 Trip.listAllTripHappeningAt(dateTime);
+                scanner.nextLine();  // Consume the leftover newline
+
+                break;
             case 2:
                 // Ask the user for input
                 System.out.print("Enter another date after the date you just entered (format: yyyy-mm-dd): ");
@@ -1154,6 +1180,8 @@ public class Main {
 
                 System.out.println("You entered: " + dateTime1);
                 Trip.getTripsBetweenDates(dateTime,dateTime1);
+                scanner.nextLine();  // Consume the leftover newline
+
             default:
                 System.out.println("Invalid choice. Returning to main menu.");
                 return;
@@ -1177,7 +1205,7 @@ public class Main {
         }
         System.out.println("Ports available: ");
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-            System.out.print(entry.getKey() + "," + "/t");
+            System.out.print(entry.getKey() + "," + "\t");
         }
         String port=scanner.nextLine();
 
@@ -1194,6 +1222,7 @@ public class Main {
 
 // Get the user's choice
                 int choice1 = scanner.nextInt();
+
 
 // Convert the choice to a vehicle type
                 String type;
@@ -1218,6 +1247,7 @@ public class Main {
 
 
             case 2:
+
                 break;
             case 3:
                 return;
@@ -1226,7 +1256,7 @@ public class Main {
 
     private static void VehicleFunctionData() {
         System.out.println("=== Vehicle Function ===");
-        System.out.println("1. Move Port");
+        System.out.println("1. Allocate a vehicle");
         System.out.println("2. Load container");
         System.out.println("3. Unload container");
         System.out.println("4. Refuel");
@@ -1240,15 +1270,77 @@ public class Main {
             scanner.nextLine(); // Clear the invalid input
             return; // Return to the main menu
         }
+        System.out.println("Vehicles: ");
+        if (allVehicle != null && !allVehicle.isEmpty()){
+            for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
+                System.out.print(entry.getKey() + "," + "\t");
+            }
+        }else {
+            System.out.println("No vehicle");
+            return;
+
+        }
+            System.out.println("Enter the ID of the Vehicle:");
+            String id = scanner.nextLine();
 
         switch(choice){
             case 1:
+
+                    if (allVehicle.get(id).getCurrentPort()!=null){
+                        System.out.println("This Vehicle had already allocated, generate a Trip to move it to another Port");}
+
+
+                scanner.nextLine();  // Consume the leftover newline
+
                 break;
             case 2:
+                double a =allVehicle.get(id).getCurrentFuel();
+                System.out.println("Fuel Capacity: "+allVehicle.get(id).getFuelCapacity()+"Current fuel: "+a);
+                System.out.println("Enter refuel amount");
+                double refuel = scanner.nextDouble();
+                allVehicle.get(id).reFuel(refuel);
+                if (a >allVehicle.get(id).getCurrentFuel()) {
+                    refuel=a+refuel;
+                    fuelUsedInADay.put(today, refuel);
+                }
+                System.out.println("Total fuel used: "+ fuelUsedInADay);
+                scanner.nextLine();  // Consume the leftover newline
+
                 break;
             case 3:
                 return;
         }
     }
+    public static void main (String[]args) {
+        fuelUsedInADay = new HashMap<>();
+        today = LocalDate.now().atStartOfDay();
+
+        Scanner scanner = new Scanner(System.in);
+        fuelUsedInADay.put(today,0.0);
+
+
+        while (true) {
+            displayWelcomeScreen();
+            displayMainMenu();
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // consume newline
+
+            switch (choice) {
+                case 1:
+                    // Handle user login
+                    loginUser();
+                    break;
+                case 2:
+                    // Exit the application
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
 }
 

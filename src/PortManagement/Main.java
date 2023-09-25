@@ -968,7 +968,9 @@ public class Main {
         System.out.print("Enter it's current position (Port ID): ");
         String position = scanner.nextLine();
         allVehicle.get(id).moveTo(allPort.get(position));
-
+        List<Vehicle> list = new ArrayList<>();
+        Vehicle vehicle = new Vehicle(id,type,carryingCapacity,fuelCapacity,currentfuel,null,null);
+        list.add(vehicle);
 
 
     }

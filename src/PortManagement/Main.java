@@ -939,6 +939,7 @@ public class Main {
         String id =allVehicle.get("temp").setType(type);
 
 
+
         System.out.print("Enter fuel capacity (double): ");
         double fuelCapacity = scanner.nextDouble();
         allVehicle.get(id).setFuelCapacity(fuelCapacity);

@@ -12,8 +12,6 @@ public class Vehicle implements  VehicleInterface{
     private String ID;
     private String Type;
 
-    private ArrayList<Container> Containers;
-
     private Container container;
 
     private double carryingCapacity;
@@ -137,9 +135,7 @@ public class Vehicle implements  VehicleInterface{
 
 
     }
-    public static ArrayList<Vehicle> getAllVehiclesAsList(){
-        return new ArrayList<>(allVehicle.values());
-    }
+
 
     public String getType() {
         return Type;

@@ -667,7 +667,7 @@ public class Main {
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print( entry.getKey()+"," +"\t");
             }
-        if (allVehicle != null){
+            if (allVehicle != null && !allVehicle.isEmpty()){
 
                 System.out.println("Vehicle: ");
             for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
@@ -689,7 +689,7 @@ public class Main {
 
     }
     private static void RemoveContainer(){
-        if (allContainer != null){
+        if (allContainer != null && !allContainer.isEmpty()){
             System.out.println("Containers: ");
             for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
                 System.out.print( entry.getKey()+"," +"\t");
@@ -863,7 +863,7 @@ public class Main {
 
     }
     private static void RemovePort() {
-        if (allPort != null) {
+        if (allPort != null && !allPort.isEmpty()){
             System.out.println("Ports: ");
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
@@ -988,7 +988,7 @@ public class Main {
 
     public static void RemoveVehicle(){
         System.out.println("Vehicles: ");
-     if(allVehicle!=null){
+        if (allVehicle != null && !allVehicle.isEmpty()){
         for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
             System.out.print(entry.getKey() + "," + "\t");
         }
@@ -1275,7 +1275,7 @@ public class Main {
             return; // Return to the main menu
         }
         System.out.println("Vehicles: ");
-        if(allVehicle!=null) {
+        if (allVehicle != null && !allVehicle.isEmpty()){
             for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
             }

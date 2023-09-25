@@ -964,6 +964,7 @@ public class Main {
             return;
         }else {
             System.out.print("Enter it's current position (Port ID): ");
+            scanner.nextLine();  // Consume the leftover newline
             String position = scanner.nextLine();
             allVehicle.get(id).moveTo(allPort.get(position));
         }

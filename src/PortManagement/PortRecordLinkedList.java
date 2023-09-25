@@ -41,11 +41,11 @@ public class PortRecordLinkedList {
 
 
         Main m = new Main();
-        List<Vehicle> list = m.PortManagementSystem.readVehicles();
+        List<Container> list = m.PortManagementSystem.readContainers();
 
-        for (Vehicle o : list) {
+        for (Container o : list) {
             System.out.println(o);
         }
-//        PortManagementSystem.addVehicle();
+        PortManagementSystem.addContainer();
     }
 }

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static PortManagement.Vehicle.allVehicle;
+
 public class PortManagementSystem {
 
         // Sample data initialization
@@ -56,10 +58,11 @@ public class PortManagementSystem {
                 double fuelCapacity = scanner.nextDouble();
                 System.out.print("Enter the current fuel for the new vehicle: ");
                 double currentFuel = scanner.nextDouble();
-                System.out.print("Enter the current port for the new vehicle: ");
-                int currentPortID = scanner.nextInt();
-                System.out.print("Enter the container for the new vehicle: ");
-                int containerID = scanner.nextInt();
+//                System.out.print("Enter the current port for the new vehicle: ");
+//                String currentPortID = scanner.nextLine();
+//                System.out.print("Enter the container for the new vehicle: ");
+//                int containerID = scanner.nextInt();
+
 
 
 
@@ -74,17 +77,18 @@ public class PortManagementSystem {
                 List<Container> list = new ArrayList<>();
                 System.out.print("Enter the Id for the new container: ");
                 String ID = scanner.nextLine();
-                System.out.print("Enter the name for the new container: ");
-                String type = scanner.nextLine();
-                System.out.print("Enter the latitude for the new container: ");
+                System.out.print("Enter the weight for the new container: ");
                 double weight = scanner.nextDouble();
-                System.out.print("Enter the fuel Capacity for the new container: ");
-                double fuelCapacity = scanner.nextDouble();
-                System.out.print("Enter the current fuel for the new container: ");
-                double currentFuel = scanner.nextDouble();
+                System.out.print("Enter the type for the new container: ");
+                String type = scanner.nextLine();
+
+//                System.out.print("Enter the fuel Capacity for the new container: ");
+//                double fuelCapacity = scanner.nextDouble();
+//                System.out.print("Enter the current fuel for the new container: ");
+//                double currentFuel = scanner.nextDouble();
                 System.out.print("Enter the position for the new container: ");
                 String position = scanner.nextLine();
-                Container container = new Container(ID,weight, type, fuelCapacity, currentFuel, position);
+                Container container = new Container(ID,weight, type, position);
                 list.add(container);
                 PortManagementSystem.writeContainers(list, "containers.txt");
         }

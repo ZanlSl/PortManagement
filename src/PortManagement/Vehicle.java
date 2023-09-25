@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 
-public class Vehicle implements  VehicleInterface{
+public class Vehicle implements  VehicleInterface {
     private String ID;
     private String Type;
 
@@ -23,36 +23,39 @@ public class Vehicle implements  VehicleInterface{
     private static int idCounter;
 
 
-
-    public Vehicle(){
-        this.container=null;
-        allVehicle.put("temp",this);
+    public Vehicle() {
+        this.container = null;
+        this.setCurrentFuel(0);
+        allVehicle.put("temp", this);
 
 
         // If the vehicle doesn't have the container, try to load it
 
     }
+
     public Vehicle(String ID, String Type, double carryingCapacity, double fuelCapacity, double currentFuel, Port currentPort, Container container) {
         this.ID = ID;
         this.Type = Type;
-        this.container =container ;
+        this.container = container;
         this.carryingCapacity = carryingCapacity;
         this.fuelCapacity = fuelCapacity;
         this.currentFuel = currentFuel;
         this.currentPort = currentPort;
-        allVehicle.put( this.ID,this);
+        allVehicle.put(this.ID, this);
 
 
     }
 
 
-
-
-    public void moveTo(Port port){
-        this.currentPort=port;
+    public void moveTo(Port port) {
+        if (this.currentPort != null) {
+            this.currentPort.removeVehicle(this);
+        }
+        this.currentPort = port;
         port.addVehicle(this);
 
     }
+
     public void checkFuel() {
         if (this.getCurrentFuel() < 2.0) {
             System.out.println("The vehicle does not have enough fuel for this trip");
@@ -60,10 +63,15 @@ public class Vehicle implements  VehicleInterface{
             return;
         }
     }
-    public void reFuel(double fuelAmount){
-        setCurrentFuel(fuelAmount);
-        }
 
+    public void reFuel(double fuelAmount) {
+        double after = this.currentFuel + fuelAmount;
+        if (after <= this.fuelCapacity){
+            setCurrentFuel(fuelAmount);
+    }else {
+            System.out.println("Exceed total fuel capacity");
+        }
+}
     public void load(Container container) {
         if (this.container == null) {
             if (container.getWeight() <= carryingCapacity) {
@@ -118,7 +126,7 @@ public class Vehicle implements  VehicleInterface{
             }
 
     public void setID() {
-        if (!allVehicle.isEmpty()) {
+        if (allVehicle.size()!=1) {
             String lastKey = allVehicle.lastKey();
             idCounter = Integer.parseInt(lastKey.substring(2));
 
@@ -130,6 +138,7 @@ public class Vehicle implements  VehicleInterface{
         }else {
             this.ID = "tr" + (++idCounter); // Increment the counter and prepend "Tr"
         }
+        System.out.println("thisID"+this.ID);
         allVehicle.put( this.ID, allVehicle.get("temp"));
         allVehicle.remove("temp");
 

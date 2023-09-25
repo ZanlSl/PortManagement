@@ -944,9 +944,9 @@ public class Main {
         double fuelCapacity = scanner.nextDouble();
         allVehicle.get(id).setFuelCapacity(fuelCapacity);
 
-        System.out.print("Enter current fuel capacity (double): ");
+        System.out.print("Enter current fuel capacity-must be smaller than it's capacity (double): ");
         double currentfuel = scanner.nextDouble();
-        allVehicle.get(id).setCurrentFuel(currentfuel);
+        allVehicle.get(id).reFuel(currentfuel);
 
 
         System.out.print("Enter carrying capacity (double): ");
@@ -970,6 +970,7 @@ public class Main {
         System.out.print("Enter it's current position (Port ID): ");
         String position = scanner.nextLine();
         allVehicle.get(id).moveTo(allPort.get(position));
+
 
 
 

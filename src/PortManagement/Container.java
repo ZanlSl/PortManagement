@@ -1,4 +1,5 @@
 package PortManagement;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -7,7 +8,7 @@ import java.util.TreeMap;
 
 
 
-public class Container implements ContainerInterface{
+public class Container implements ContainerInterface, Serializable {
 
     private String ID;
     private double weight;

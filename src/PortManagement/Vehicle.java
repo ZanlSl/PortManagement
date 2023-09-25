@@ -4,11 +4,12 @@ package PortManagement;
 
 import PortManagement.Container;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
 
-public class Vehicle implements  VehicleInterface {
+public class Vehicle implements  VehicleInterface, Serializable {
     private String ID;
     private String Type;
 

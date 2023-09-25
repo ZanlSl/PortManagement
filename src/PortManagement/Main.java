@@ -1,8 +1,12 @@
 package PortManagement;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.io.*;
 
 
 // Java Program to Illustrate StudentRecordLinkedList Class
@@ -21,6 +25,7 @@ import java.util.*;
 
 import static PortManagement.Container.allContainer;
 import static PortManagement.Port.allPort;
+import static PortManagement.PortManager.allManager;
 import static PortManagement.Trip.allTrip;
 import static PortManagement.Vehicle.allVehicle;
 
@@ -83,8 +88,10 @@ public class Main {
         if (username.equals("admin") && password.equals("admin123") && roleChoice == 1) {
             user="admin";
              // Directly call the admin dashboard upon successful login as admin
-        } else if (username.equals("manager") && password.equals("manager123") && roleChoice == 2) {
-            user="manager"; // Directly call the manager dashboard upon successful login as manager
+        } else if (allManager.containsKey(username)&& roleChoice == 2){
+            if (allManager.get(username).getPassword().equals(password) ){
+                user=username; // Directly call the manager dashboard upon successful login as manager
+            }
         } else {
             System.out.println("Invalid credentials or role choice. Please try again.");
             loginUser();
@@ -540,14 +547,15 @@ public class Main {
     private static void modifyOption(String user) {
         System.out.println("=== Modify Option ===");
 
-        if (user.equals("manager")) {
+        if (!user.equals("admin")) {
             System.out.println("1. Container");
             System.out.println("2. Trip");
-        } else if (user.equals("admin")) {
+        } else {
             System.out.println("1. Container");
             System.out.println("2. Trip");
             System.out.println("3. Port");
             System.out.println("4. Vehicle");
+            System.out.println("5. Manager");
         }
 
         System.out.println("Enter your choice(number): ");
@@ -561,23 +569,30 @@ public class Main {
             scanner.nextLine(); // Clear the invalid input
             return; // Return to the main menu
         }
+        if (user.equals("admin")){
+            if (choice == 1) {
+                ContainerModificationData(user);
+            } else if (choice==2) {
+                TripModificationData(user);
+            } else if (choice==3) {
+                PortModificationData();
+            } else if (choice==4) {
+                VehicleModificationData();
+            } else if (choice==5) {
+                ManagermModificationData();}
 
-        if (choice == 1) {
-            ContainerModificationData();
-            chooseChoices(user);
-        } else if (choice==2) {
-            TripModificationData();
-        } else if (choice==3) {
-            PortModificationData();
-        } else if (choice==4) {
-            VehicleModificationData();
-        } else {
-            System.out.println("Invalid choice.");
-            chooseChoices(user);
+        }else {
+            if (choice == 1) {
+                ContainerModificationData(user);
+            } else if (choice == 2) {
+                TripModificationData(user);
+            }
         }
+        chooseChoices(user);
+
     }
 
-    private static void ContainerModificationData() {
+    private static void ContainerModificationData(String user) {
         System.out.println("=== Container Modification data ===");
         System.out.println("1. Add container");
         System.out.println("2. Remove container");
@@ -599,13 +614,26 @@ public class Main {
 //        String e="Liquid";
         switch(choice){
             case 1:
-               AddContainer();
-               scanner.nextLine();  // Consume the leftover newline
+                if(user.equals("admin")){
+                    AddContainer();
+                    scanner.nextLine();  // Consume the leftover newline
+                }else{
+                    AddContainerForManager(allManager.get(user));
+                    scanner.nextLine();  // Consume the leftover newline
+
+                }
+
 
                 break;
             case 2:
-                RemoveContainer();
-                scanner.nextLine();  // Consume the leftover newline
+                if(user.equals("admin")){
+                    RemoveContainer();
+                    scanner.nextLine();  // Consume the leftover newline
+                }else{
+                    RemoveContainerForManager(allManager.get(user));
+                    scanner.nextLine();  // Consume the leftover newline
+
+                }
 
                 break;
 
@@ -687,6 +715,60 @@ public class Main {
 
 
     }
+    private static void AddContainerForManager(PortManager manager){
+        new Container();
+        String id = "c" + Container.getIdCounter();
+        System.out.println("Enter it's weight:");
+        double weight = scanner.nextDouble();
+        allContainer.get(id).setWeight(weight);
+        System.out.println("Choose the type(number):");
+        System.out.println("1.DryStorage");
+        System.out.println("2.OpenTop");
+        System.out.println("3.OpenSide");
+        System.out.println("4.Refrigerated");
+        System.out.println("5.Liquid");
+        int i;
+        do {
+            System.out.println("Please enter a number:");
+            try {
+                i = scanner.nextInt();
+                if (i >= 1 && i <= 5) {
+                    break;  // If the input is valid, break the loop
+                } else {
+                    System.out.println("The number is not in the range from 1 to 5. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("That's not a valid number. Please try again.");
+                scanner.next();  // Discard the invalid input
+            }
+        } while (true);
+        switch (i) {
+            case 1:
+                allContainer.get(id).setType("DryStorage");
+                break;
+            case 2:
+                allContainer.get(id).setType("OpenTop");
+                break;
+
+            case 3:
+                allContainer.get(id).setType("OpenSide");
+                break;
+
+            case 4:
+                allContainer.get(id).setType("Refrigerated");
+                break;
+
+            case 5:
+                allContainer.get(id).setType("Liquid");
+                break;
+
+
+        }
+        manager.getPortResponsible().addContainer(allContainer.get(id));
+        allContainer.get(id).setPosition(manager.getPortResponsible().getId());
+
+
+    }
     private static void RemoveContainer(){
         if (allContainer != null && !allContainer.isEmpty()){
             System.out.println("Containers: ");
@@ -706,8 +788,27 @@ public class Main {
 
         }
     }
+    private static void RemoveContainerForManager(PortManager manager){
+        if (manager.getPortResponsible().getContainers() != null && !manager.getPortResponsible().getContainers().isEmpty()){
+            System.out.println("Containers: ");
+            for (Container container : manager.getPortResponsible().getContainers()) {
+                System.out.print( container.getID()+"," +"\t");
+            }
+            System.out.println("Enter the ID of the container:");
+            String id = scanner.nextLine();
+//            if (allContainer.get(id).getPosition().charAt(0) == 'P'){
+//                allPort.get(allContainer.get(id).getPosition()).removeContainer((allContainer.get(id)));
+//            }else{allVehicle.get(allContainer.get(id).getPosition()).setContainer(null);}
 
-    private static void TripModificationData() {
+            allContainer.remove(id);
+            System.out.println("Removed"+id);
+
+        }else{System.out.println("No container to remove");
+
+        }
+    }
+
+    private static void TripModificationData(String user) {
         System.out.println("=== Trip Modification data ===");
         System.out.println("1. Start trip");
         System.out.println("2. End trip");
@@ -725,13 +826,28 @@ public class Main {
 
         switch(choice){
             case 1:
-                StartTrip();
+                if(user.equals("admin")){
+                    StartTrip();
+                    scanner.nextLine();  // Consume the leftover newline
+                }else{
+                    StartTripForManager(allManager.get(user));
+                    scanner.nextLine();  // Consume the leftover newline
+
+                }
+
                 scanner.nextLine();  // Consume the leftover newline
 
                 break;
 
             case 2:
-                EndTrip();
+                if(user.equals("admin")){
+                    EndTrip();
+                    scanner.nextLine();  // Consume the leftover newline
+                }else{
+                    EndTripForManager(allManager.get(user));
+                    scanner.nextLine();  // Consume the leftover newline
+
+                }
                 scanner.nextLine();  // Consume the leftover newline
 
         }
@@ -789,12 +905,74 @@ public class Main {
 
 
         }
+    private static void StartTripForManager(PortManager manager){
 
+        System.out.println("Enter the starting Port:");
+        String from=manager.getPortResponsible().getId();
+        System.out.println("Enter the destination Port:");
+        String to=scanner.nextLine();
+        System.out.println("Vehicle available: ");
+        for (Vehicle vehicle : allPort.get(from).getVehicles() ) {
+            System.out.println(vehicle);
+        }
+        System.out.println("Enter the vehicle:");
+        String vehicle=scanner.nextLine();
+        System.out.println("Containers available: ");
+        for (Container container : allPort.get(from).getContainers()) {
+            System.out.println(container);
+        }
+        System.out.println("Enter the container:");
+        String container=scanner.nextLine();
+        if (vehicle.charAt(0)=='t' && allPort.get(from).isLandingAbility() ==false ||allPort.get(to).isLandingAbility() ==false){
+            System.out.println("The Port entered can't be reach by truck");
+            return;
+        };
+        if(!allPort.get(from).getVehicles().contains(allContainer.get(vehicle))){
+            System.out.println("This vehicle isn't here");
+            return;
+        }
+        if(!allPort.get(from).getContainers().contains(allContainer.get(container))){
+            System.out.println("This container isn't here");
+            return;
+        }
+        if(allVehicle.get(vehicle).getContainer()!=null && allVehicle.get(vehicle).getContainer().getID() != allContainer.get(container).getID()) {
+            System.out.println("This vehicle is having a container");
+            return;
+        }
+        new Trip();
+        String id = "Trip" + Trip.getIdCounter();
+        if (allVehicle.get(vehicle).getContainer().getID() != allContainer.get(container).getID()){
+            allPort.get(from).load(allVehicle.get(vehicle), allContainer.get(container));}
+        if (allVehicle.get(vehicle).getContainer() == null) {
+            allTrip.remove(id);
+            return;
+        }
+
+        allTrip.get(id).startNewTrip();
+        allTrip.get(id).setContainer(allContainer.get(container));
+        allTrip.get(id).setFrom(allPort.get(to));
+        allTrip.get(id).setTo(allPort.get(to));
+    }
     private static void EndTrip(){
         if (!Trip.getOngoingTrips().isEmpty()) {
             System.out.println("Trips ongoing: ");
             for (Trip trip : Trip.getOngoingTrips()) {
                 System.out.print(trip + "," + "\t");
+            }
+            System.out.println("Enter the tripID you want to end:");
+            String ongoingtrip = scanner.nextLine();
+            allTrip.get(ongoingtrip).completeTrip();
+        }else {
+            System.out.println("no ongoing trip");
+        }
+    }
+    private static void EndTripForManager(PortManager manager){
+        if (!Trip.getOngoingTrips().isEmpty()) {
+            System.out.println("Trips to your Port: ");
+            for (Trip trip : Trip.getOngoingTrips()) {
+                if (trip.getTo().equals(manager.getPortResponsible())) {
+                    System.out.print(trip + "," + "\t");
+                }
             }
             System.out.println("Enter the tripID you want to end:");
             String ongoingtrip = scanner.nextLine();
@@ -965,10 +1143,10 @@ public class Main {
         System.out.println("Ports available: ");
         int a =0;
         for (Port port : allPort.values()) {
-            if (type!="ship"&& port.isLandingAbility()) {
+            if (!type.equals("ship")&& port.isLandingAbility()) {
                 a+=1;
                 System.out.println(port.getId()+","+"\t" );
-            } else if (type=="ship") {
+            } else if (type.equals("ship")) {
                 a+=1;
             }
         }
@@ -1002,6 +1180,34 @@ public class Main {
         System.out.println("No Vehicle to remove");
     }
         }
+
+    public static void ManagermModificationData(){
+        if (allPort != null && !allPort.isEmpty()) {
+            System.out.println("Where is it now? Enter a port or a vehicle ID:");
+            System.out.println("Ports: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                System.out.print(entry.getKey() + "," + "\t");
+            }
+
+        }else {
+            System.out.println("Add the Port first");
+            return;
+        }
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        // Assuming Port class has a method to get a Port by its name
+        System.out.print("Enter the ID of the port responsible: ");
+        String id = scanner.nextLine();
+        System.out.print("Enter account name: ");
+        String accountName = scanner.nextLine();
+
+        Port portResponsible = allPort.get(id);
+
+        // Create a new PortManager with the input data
+        new PortManager(accountName, password, portResponsible);
+
+        System.out.println("PortManager created successfully!");
+    }
     public static void functionOption(String user){
         System.out.println("=== Function Option ===");
         System.out.println("1. Container");
@@ -1315,12 +1521,85 @@ public class Main {
                 return;
         }
     }
+    public static void saveData(){
+        try {
+            FileOutputStream fos = new FileOutputStream("port.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(allPort);
+            oos.close();
+            fos.close();
+            System.out.println("Serialized data is saved in port.ser");
+
+            fos = new FileOutputStream("container.ser");
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(allContainer);
+            oos.close();
+            fos.close();
+            System.out.println("Serialized data is saved in container.ser");
+
+            fos = new FileOutputStream("Vehicle.ser");
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(allVehicle);
+            oos.close();
+            fos.close();
+            System.out.println("Serialized data is saved in vehicle.ser");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+    public static void readData(){
+
+        try {
+            FileInputStream fis = new FileInputStream("port.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            allPort = (TreeMap) ois.readObject();
+            ois.close();
+            fis.close();
+            System.out.println("Deserialized data is read from port.ser");
+
+            fis = new FileInputStream("container.ser");
+            ois = new ObjectInputStream(fis);
+            allContainer = (TreeMap) ois.readObject();
+            ois.close();
+            fis.close();
+            System.out.println("Deserialized data is read from container.ser");
+
+            fis = new FileInputStream("vehicle.ser");
+            ois = new ObjectInputStream(fis);
+            allVehicle = (TreeMap) ois.readObject();
+            ois.close();
+            fis.close();
+            System.out.println("Deserialized data is read from vehicle.ser");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Class not found");
+            c.printStackTrace();
+            return;
+        }
+
+        // Displaying the TreeMap
+        for (Map.Entry<String, Port> entry : Port.allPort.entrySet()) {
+            System.out.println("Port ID: " + entry.getKey());
+        }
+
+        for (Map.Entry<String, Container> entry : Container.allContainer.entrySet()) {
+            System.out.println("Container ID: " + entry.getKey() );
+        }
+    }
     public static void main (String[]args) {
         fuelUsedInADay = new HashMap<>();
         today = LocalDate.now().atStartOfDay();
 
         Scanner scanner = new Scanner(System.in);
         fuelUsedInADay.put(today,0.0);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                saveData();
+                    }
+        });
 
 
         while (true) {
@@ -1343,8 +1622,11 @@ public class Main {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        }
-    }
 
+        }
+
+    }
 }
+
+
 

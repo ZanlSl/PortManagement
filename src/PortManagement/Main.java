@@ -632,7 +632,7 @@ public class Main {
 
     }
     private static void AddContainer() {
-        new Container();
+//        new Container();
         String id = "c" + Container.getIdCounter();
         System.out.println("Enter it's weight:");
         double weight = scanner.nextDouble();

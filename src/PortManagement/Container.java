@@ -78,7 +78,7 @@ public class Container implements ContainerInterface, Serializable {
                 System.out.println("Invalid container type");
         }
     }
-    public double totalWeightCalculateByType(String type){
+    public static double totalWeightCalculateByType(String type){
         double totalWeight = 0;
         for (Container container : allContainer.values()) {
             if (container.type.equals(type)) {

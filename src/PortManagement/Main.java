@@ -37,7 +37,6 @@ public class Main {
     // Add a key-value pair to the map
     public static LocalDateTime today = LocalDate.now().atStartOfDay();
     private static Scanner scanner = new Scanner(System.in);
-    PortManagementSystem PortManagementSystem = new PortManagementSystem();
     private static void displayWelcomeScreen() {
         System.out.println("COSC2081 GROUP ASSIGNMENT");
         System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
@@ -98,421 +97,6 @@ public class Main {
         }
         chooseChoices(user);
     }
-    private static void adminDashboard() {
-        System.out.println("Welcome Admin! You can manage everything here.");
-
-        while (true) {
-            System.out.println("\n=== Admin Dashboard ===");
-            System.out.println("1. View Ports");
-            System.out.println("2. View Containers");
-            System.out.println("3. View Vehicles");
-            System.out.println("4. View Trip");
-            System.out.println("5. Log Out");
-
-
-            System.out.print("Enter your choice: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
-
-            switch (choice) {
-                case 1:
-
-                    int option = scanner.nextInt();
-                    System.out.println("1. Add Port");
-                    System.out.println("2. Remove Port");
-                    System.out.println("3. Modify Port");
-                    System.out.println("4. Calculate The Distance");
-
-                    switch (option) {
-                        case 1:
-//                                Main m = new Main();
-//                                List<Port> list = m.Port.readPorts();
-//
-//                                for (Port Port : list) {
-//                                    System.out.println(Port);
-//                                }
-
-                            break;
-                        case 2:
-//                                removePort();
-                            break;
-                        case 3:
-//                                modifyPorts();
-                            break;
-                        case 4:
-//                                calculateDistance();
-                            break;
-                        case 5:
-                            return;
-                        default:
-                            System.out.println("Invalid Option!");
-                    }
-
-                case 2:
-
-                    int option2 = scanner.nextInt();
-
-                    System.out.println("1. Add Container");
-                    System.out.println("2. Remove Container");
-                    System.out.println("3. Modify Container");
-                    System.out.println("4. Load Container");
-                    System.out.println("5. Unload Container");
-                    System.out.println("6. Calculate Weight Of Each Type");
-
-                    switch (option2) {
-                        case 1:
-//                                Main m = new Main();
-//                                List<Port> list = m.Port.readPorts();
-//
-//                                for (Port Port : list) {
-//                                    System.out.println(Port);
-//                                }
-
-                            break;
-                        case 2:
-//                                removeContainer();
-                            break;
-                        case 3:
-//                                modifyContainers();
-                            break;
-                        case 4:
-//                                loadContainer();
-                            break;
-                        case 5:
-//                                UnloadContainer();
-                            break;
-                        case 6:
-//                                CalculateWeight();
-                            break;
-                        case 7:
-                            return;
-                        default:
-                            System.out.println("Invalid Option!");
-                    }
-
-                case 3:
-
-                    int option3 = scanner.nextInt();
-
-                    System.out.println("1. Add Vehicle");
-                    System.out.println("2. Remove Vehicle");
-                    System.out.println("3. Modify Vehicle");
-
-                    switch (option3) {
-                        case 1:
-//                                Main m = new Main();
-//                                List<Port> list = m.Port.readPorts();
-//
-//                                for (Port Port : list) {
-//                                    System.out.println(Port);
-//                                }
-
-                            break;
-                        case 2:
-//                                removeVehicle();
-                            break;
-                        case 3:
-//                                modifyVehicles();
-                            break;
-                        case 4:
-                            return;
-                        default:
-                            System.out.println("Invalid Option!");
-                    }
-
-                case 4:
-
-                    int option4 = scanner.nextInt();
-
-                    System.out.println("1. Start Trip");
-                    System.out.println("2. End Trip");
-                    switch (option4){
-                        case 1:
-//                                StartTrip();
-                            break;
-                        case 2:
-//                                EndTrip();
-                            break;
-                        case 3:
-                            return;
-                    }
-
-
-                case 5:
-                    System.out.println("Logging out...");
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-    }
-
-//    private static void viewPorts() {
-//        // This is a mock function. In reality, you'd fetch and display port details from your data source.
-//        System.out.println("\n=== Ports ===");
-//        System.out.println("Port 1: Location A");
-//        System.out.println("Port 2: Location B");
-//    }
-
-//    private static void modifyContainers() {
-//        // Mock function. You would have real logic to add, remove or modify container details.
-//        System.out.println("\n=== Modify Containers ===");
-//        System.out.println("Container 1: Type A, Weight: 100kg");
-//        System.out.println("Container 2: Type B, Weight: 200kg");
-//        System.out.println("Add, remove or modify containers as needed...");
-//    }
-
-//    private static void viewVehicles() {
-//        // Another mock function. You'd display vehicle details fetched from your data source.
-//        System.out.println("\n=== Vehicles ===");
-//        System.out.println("Vehicle 1: Type Ship, Capacity: 1000 containers");
-//        System.out.println("Vehicle 2: Type Truck, Capacity: 20 containers");
-//    }
-
-//    private static void modifyUsers() {
-//        // Mock function. You'd provide functionalities to add, remove or modify user details.
-//        System.out.println("\n=== Modify Users ===");
-//        System.out.println("User 1: Role Admin, Username: admin");
-//        System.out.println("User 2: Role Manager, Username: manager");
-//        System.out.println("Add, remove or modify users as needed...");
-//    }
-
-
-    private static void managerDashboard() {
-        System.out.println("Welcome Manager! You can manage Ports, Containers, and Vehicles.");
-
-        while (true) {
-            System.out.println("\n=== Manager Dashboard ===");
-            System.out.println("1. View Ports");
-            System.out.println("2. View Containers");
-            System.out.println("3. View Vehicles");
-            System.out.println("4. Search Trip");
-            System.out.println("5. Log Out");
-
-            System.out.print("Enter your choice: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
-
-            switch (choice) {
-                case 1:
-                    Scanner scanner5 = new Scanner(System.in);
-                    int option = scanner5.nextInt();
-
-                    System.out.println("1. Add Port");
-                    System.out.println("2. Remove Port");
-                    System.out.println("3. Modify Port");
-                    System.out.println("4. Calculate The Distance");
-
-                    switch (option) {
-                        case 1:
-                            Main m = new Main();
-                            List<Port> list = m.PortManagementSystem.readPorts();
-
-                            for (Port Port : list) {
-                                System.out.println(Port);
-                            }
-
-                            break;
-                        case 2:
-//                                removePort();
-                            break;
-                        case 3:
-//                                modifyPorts();
-                            break;
-                        case 4:
-//                                calculateDistance();
-                            break;
-                        case 5:
-                            return;
-                        default:
-                            System.out.println("Invalid Option!");
-                    }
-
-                case 2:
-                    int option2 = scanner.nextInt();
-
-                    System.out.println("1. Add Container");
-                    System.out.println("2. Remove Container");
-                    System.out.println("3. Modify Container");
-                    System.out.println("4. Load Container");
-                    System.out.println("5. Unload Container");
-                    System.out.println("6. Calculate Weight Of Each Type");
-
-                    switch (option2) {
-                        case 1:
-//                                Main m = new Main();
-//                                List<Port> list = m.Port.readPorts();
-//
-//                                for (Port Port : list) {
-//                                    System.out.println(Port);
-//                                }
-
-                            break;
-                        case 2:
-//                                removeContainer();
-                            break;
-                        case 3:
-//                                modifyContainers();
-                            break;
-                        case 4:
-//                                loadContainer();
-                            break;
-                        case 5:
-//                                UnloadContainer();
-                            break;
-                        case 6:
-//                                CalculateWeight();
-                            break;
-                        case 7:
-                            return;
-                        default:
-                            System.out.println("Invalid Option!");
-                    }
-
-                case 3:
-                    int option3 = scanner.nextInt();
-                    while (true){
-                        System.out.println("1. Add Vehicle");
-                        System.out.println("2. Remove Vehicle");
-                        System.out.println("3. Modify Vehicle");
-
-                        switch (option3) {
-                            case 1:
-                                Main m = new Main();
-                                List<Port> list = m.PortManagementSystem.readPorts();
-
-                                for (Port Port : list) {
-                                    System.out.println(Port);
-                                }
-
-                                break;
-                            case 2:
-//                                removeVehicle();
-                                break;
-                            case 3:
-//                                modifyVehicles();
-                                break;
-//                case 4:
-//                    while (true){
-//                        System.out.println("1. add Ports");
-//                        System.out.println("2. remove Ports");
-//                    int option = scanner.nextInt();
-//                    scanner.nextLine();
-//                    switch (option) {
-//                        case 1:
-//                            System.out.print("Enter the name for the new port: ");
-//                            String name = scanner.nextLine().trim();
-//                            if (name.equals("q")) {
-//                                break;
-//                            }
-//                            System.out.print("Enter the latitude for the new port: ");
-//                            double latitude = scanner.nextDouble();
-//                            System.out.print("Enter the longitude for the new port: ");
-//                            double longtitude = scanner.nextDouble();
-//                            System.out.print("Enter the total capacity for the new port: ");
-//                            double totalCapacity = scanner.nextDouble();
-//                            System.out.print("Enter the landing ability for the new port: ");
-//                            boolean landingAbility = scanner.nextBoolean();
-//                            allPort.put(Port.Port());
-
-
-                            // Write the new Port to the file
-//                            writePorts(ports, "data.txt");
-
-//                            break;
-//                        default:
-//                            System.out.println("Invalid choice. Please try again.");
-//                        }
-//                    }
-                            case 4:
-                                int option4 = scanner.nextInt();
-
-                                System.out.println("1. Start Trip");
-                                System.out.println("2. End Trip");
-                                switch (option4){
-                                    case 1:
-//                                StartTrip();
-                                        break;
-                                    case 2:
-//                                EndTrip();
-                                        break;
-                                    case 3:
-                                        return;
-                                }
-
-
-                            case 5:
-                                System.out.println("Logging out...");
-                                return;
-                            default:
-                                System.out.println("Invalid choice. Please try again.");
-                        }
-                    }
-            }
-
-//    private static void modifyPorts() {
-//        // Mock function. You would have real logic to add, remove, or modify port details.
-//        System.out.println("\n=== Modify Ports ===");
-//        System.out.println("Port 1: Location A");
-//        System.out.println("Port 2: Location B");
-//        System.out.println("Add, remove, or modify ports as needed...");
-//    }
-
-//    private static void modifyVehicles() {
-//        // Mock function. You would have real logic to add, remove, or modify vehicle details.
-//        System.out.println("\n=== Modify Vehicles ===");
-//        System.out.println("Vehicle 1: Type Ship, Capacity: 1000 containers");
-//        System.out.println("Vehicle 2: Type Truck, Capacity: 20 containers");
-//        System.out.println("Add, remove, or modify vehicles as needed...");
-//    }
-
-
-//    private static void statisticsOperations() {
-//                while (true) {
-//                    System.out.println("1. Calculate fuel used in a day");
-//                    System.out.println("2. Calculate weight of each type of containers");
-//                    System.out.println("3. List all ships in a port");
-//                    System.out.println("4. List all trips in a given day");
-//                    System.out.println("5. List all trips from day A to day B");
-//                    System.out.println("6. Go back to the main menu");
-//
-//                    int choice = scanner.nextInt();
-//                    scanner.nextLine(); // consume newline
-//
-//                    switch (choice) {
-//                        case 1:
-//                            // mock function
-//                            System.out.println("Fuel used today: 2000L");
-//                            break;
-//                        case 2:
-//                            // mock function
-//                            System.out.println("Container weights: TypeA: 1000kg, TypeB: 500kg");
-//                            break;
-//                        case 3:
-//                            // mock function
-//                            System.out.println("Ships in port: Ship1, Ship2");
-//                            break;
-//                        case 4:
-//                            // mock function
-//                            System.out.println("Trips today: Trip1, Trip2");
-//                            break;
-//                        case 5:
-//                            // mock function
-//                            System.out.println("Trips from day A to day B: Trip3, Trip4, Trip5");
-//                            break;
-//                        case 6:
-//                            return; // Exit statistics operations and go back to the main menu
-//                        default:
-//                            System.out.println("Invalid choice. Please try again.");
-//                    }
-//                }
-//            }
-        }
-    }
-
-
     private static void chooseChoices(String user) {
         System.out.println("=== Choose Choices ===");
         System.out.println("1. Modify the data");
@@ -696,7 +280,7 @@ public class Main {
                 System.out.print( entry.getKey()+"," +"\t");
             }
             if (allVehicle != null && !allVehicle.isEmpty()){
-
+                System.out.println(" ");
                 System.out.println("Vehicle: ");
             for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
@@ -1036,7 +620,12 @@ public class Main {
     System.out.print("Enter landing ability (boolean): ");
     boolean landingAbility = scanner.nextBoolean();
     allPort.get(id).setLandingAbility(landingAbility);
-
+    if (allPort != null && !allPort.isEmpty()) {
+        System.out.println("Ports: ");
+        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+            System.out.print(entry.getKey() + "," + "\t");
+        }
+    }
 
     }
     private static void RemovePort() {
@@ -1182,24 +771,31 @@ public class Main {
         }
 
     public static void ManagermModificationData(){
-        if (allPort != null && !allPort.isEmpty()) {
-            System.out.println("Where is it now? Enter a port or a vehicle ID:");
+        int a=0;
+        if (allPort != null || !allPort.isEmpty()) {
             System.out.println("Ports: ");
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-                System.out.print(entry.getKey() + "," + "\t");
+                if(PortManager.portTaken != null || PortManager.portTaken.isEmpty() && !PortManager.portTaken.contains(entry.getKey())){
+                    System.out.print(entry.getKey() + "," + "\t");
+                    a+=1;
+                }
             }
 
-        }else {
+        }
+        if(a==0) {
             System.out.println("Add the Port first");
             return;
         }
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-        // Assuming Port class has a method to get a Port by its name
+
+        System.out.println(" ");
         System.out.print("Enter the ID of the port responsible: ");
         String id = scanner.nextLine();
         System.out.print("Enter account name: ");
         String accountName = scanner.nextLine();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        // Assuming Port class has a method to get a Port by its name
+
 
         Port portResponsible = allPort.get(id);
 
@@ -1213,6 +809,8 @@ public class Main {
         System.out.println("1. Container");
         System.out.println("2. Port");
         System.out.println("3. Trip");
+        System.out.println("4. Vehicle");
+
         System.out.print("Enter your choice(number): ");
 
         int choice;
@@ -1231,6 +829,8 @@ public class Main {
             TripFunctionData();
         } else if (choice==3) {
             PortFunctionData();
+        } else if (choice==4) {
+            VehicleFunctionData();
         } else {
             System.out.println("Invalid choice.");
             chooseChoices(user);
@@ -1242,6 +842,7 @@ public class Main {
         System.out.println("1. Load container");
         System.out.println("2. Unload container");
         System.out.println("3. Calculate weight of each type");
+        System.out.println("4. List all container");
         System.out.print("Enter your choice(number): ");
 
         int choice;
@@ -1263,7 +864,17 @@ public class Main {
             case 2:
                 UnLoad();
                 scanner.nextLine();  // Consume the leftover newline
-
+                break;
+            case 3:
+                CalculateContainerWrightByType();
+                scanner.nextLine();  // Consume the leftover newline
+                break;
+            case 4:
+                System.out.println("Container available: ");
+                for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
+                    System.out.print(entry.getKey() + "," + "\t");
+                }
+                break;
             default:
                 System.out.println("Invalid choice. Returning to main menu.");
                 return;
@@ -1276,6 +887,8 @@ public class Main {
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
             System.out.print(entry.getKey() + "," + "\t");
         }
+        System.out.println(" ");
+
         System.out.println("Enter the Port:");
         String from=scanner.nextLine();
 
@@ -1331,7 +944,50 @@ public class Main {
         allVehicle.get(vehical).unload();
     }
 
+    private static void CalculateContainerWrightByType() {
+        System.out.println("Choose the type(number):");
+        System.out.println("1.DryStorage");
+        System.out.println("2.OpenTop");
+        System.out.println("3.OpenSide");
+        System.out.println("4.Refrigerated");
+        System.out.println("5.Liquid");
+        int i;
+        String type=" ";
 
+        do {
+            System.out.println("Please enter a number:");
+            try {
+                i = scanner.nextInt();
+                if (i >= 1 && i <= 5) {
+                    break;  // If the input is valid, break the loop
+                } else {
+                    System.out.println("The number is not in the range from 1 to 5. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("That's not a valid number. Please try again.");
+                scanner.next();  // Discard the invalid input
+            }
+        } while (true);
+        switch (i) {
+            case 1:
+                type = "DryStorage";
+                break;
+            case 2:
+                type = "OpenTop";
+                break;
+            case 3:
+                type = "OpenSide";
+                break;
+            case 4:
+                type = "Refrigerated";
+                break;
+            case 5:
+                type = "Liquid";
+                break;
+        }
+        System.out.println("Total weight of type"+ type +" is "+Container.totalWeightCalculateByType(type));
+
+    }
     private static void TripFunctionData() {
         System.out.println("=== Trip Function ===");
         System.out.println("1. Search trip by a date");
@@ -1401,6 +1057,7 @@ public class Main {
     private static void PortFunctionData() {
         System.out.println("=== Port Function ===");
         System.out.println("1. List al vehicle of type:");
+        System.out.println("2. List all Port");
 
 
         System.out.print("Enter your choice(number): ");
@@ -1457,7 +1114,10 @@ public class Main {
 
 
             case 2:
-
+                System.out.println("Ports available: ");
+                for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                    System.out.print(entry.getKey() + "," + "\t");
+                }
                 break;
             case 3:
                 return;
@@ -1467,9 +1127,8 @@ public class Main {
     private static void VehicleFunctionData() {
         System.out.println("=== Vehicle Function ===");
         System.out.println("1. Allocate a vehicle");
-        System.out.println("2. Load container");
-        System.out.println("3. Unload container");
-        System.out.println("4. Refuel");
+        System.out.println("2. Refuel");
+        System.out.println("3. List all vehicle");
         System.out.print("Enter your choice(number): ");
         int choice;
         try {
@@ -1518,6 +1177,10 @@ public class Main {
 
                 break;
             case 3:
+                System.out.println("Vehicle available: ");
+                for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
+                    System.out.print(entry.getKey() + "," + "\t");
+                }
                 return;
         }
     }
@@ -1594,7 +1257,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         fuelUsedInADay.put(today,0.0);
-
+        readData();
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 saveData();

@@ -26,6 +26,7 @@ public class Vehicle implements  VehicleInterface {
     public Vehicle() {
         this.container = null;
         this.setCurrentFuel(0);
+
         allVehicle.put("temp", this);
 
 

@@ -45,11 +45,11 @@ public class PortManagementSystem {
 //        }
         public static void addVehicle() {
 
-                LocalDateTime now = LocalDateTime.now();
-                LocalDateTime threshold = now.minusDays(7); // Calculate the threshold date
-
-                // Remove the record if it's older than 7 days
-                list.removeIf(port -> port.getTimestamp().isBefore(threshold));
+//                LocalDateTime now = LocalDateTime.now();
+//                LocalDateTime threshold = now.minusDays(7); // Calculate the threshold date
+//
+//                // Remove the record if it's older than 7 days
+//                list.removeIf(port -> port.getTimestamp().isBefore(threshold));
 
                 List<Vehicle> list = new ArrayList<>();
                 System.out.print("Enter the Id for the new vehicle: ");

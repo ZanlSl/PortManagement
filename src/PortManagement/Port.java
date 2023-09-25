@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -14,7 +13,7 @@ import java.util.List;
 
 
 
-public class Port implements ContainerPosition, PortInterface {
+public class Port implements  PortInterface {
     private String ID;
 
     private String name;
@@ -55,18 +54,10 @@ public class Port implements ContainerPosition, PortInterface {
         updateCurrentCapacity();
         allPort.put(this.ID,this);
     }
-    private LocalDateTime timestamp;
-    public Port(String name, double latitude, double longtitude, double totalCapacity, boolean landingAbility) {
-        this.timestamp = LocalDateTime.now();
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
 
     public void load(Vehicle vehicle, Container container) {
         if (containers.contains(container)) {
-            container.setPosition(vehicle);
+            container.setPosition(vehicle.getID());
             vehicle.load(container);
             containers.remove(container);
             updateCurrentCapacity();
@@ -237,7 +228,9 @@ public class Port implements ContainerPosition, PortInterface {
 
     @Override
     public String toString() {
-        return  ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
+        return "Port{" +
+
+                "ID='" + ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
                 ";"+ containers +
                 ";"+ vehicles ;
 
@@ -249,10 +242,5 @@ public class Port implements ContainerPosition, PortInterface {
 
 
 
-    @Override
-    public String getContainerPosition() {
-        return "Port: " + name +';' +
-        " ID: " + ID;
-    }
 
 }

@@ -1,4 +1,5 @@
 package PortManagement;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 
@@ -13,7 +14,7 @@ public class Container implements ContainerInterface{
     private String type;
     private double shipFuelWeightKm;
     private double truckFuelWeightKm;
-    private ContainerPosition position;
+    private String position;
     public static TreeMap<String, Container> allContainer = new TreeMap<>();
     private static int idCounter;
 
@@ -26,11 +27,11 @@ public class Container implements ContainerInterface{
 
         } else
             idCounter = 100;
-        this.ID = "c" + (++idCounter); // Increment the counter and prepend "Tr"
+        this.ID = "c" + (++idCounter); // Increment the counter and prepend "c"
         allContainer.put(this.ID, this); // Add the item to the map when it's created
 
     }
-    public Container(String ID, double weight, String type, ContainerPosition position) {
+    public Container(String ID, double weight, String type, String position) {
         this.ID = ID;
         this.weight = weight;
         this.type = type;
@@ -42,11 +43,11 @@ public class Container implements ContainerInterface{
 
 
 
-    public void setPosition(ContainerPosition position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
-    public ContainerPosition getPosition() {
+    public String getPosition() {
         return this.position;
     }
 
@@ -128,6 +129,9 @@ public class Container implements ContainerInterface{
 
     public static int getIdCounter() {
         return idCounter;
+    }
+    public static ArrayList<Container> getAllContainersAsList(){
+        return new ArrayList<>(allContainer.values());
     }
 
     @Override

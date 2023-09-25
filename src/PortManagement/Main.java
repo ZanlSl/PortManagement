@@ -852,8 +852,10 @@ public class Main {
     System.out.print("Enter landing ability (boolean): ");
     boolean landingAbility = scanner.nextBoolean();
     allPort.get(id).setLandingAbility(landingAbility);
-
-
+    List<Port> list = new ArrayList<>();
+    Port port = new Port(id, name, latitude, longitude,totalCapacity, landingAbility);
+    list.add(port);
+        PortManagement.PortManagementSystem.writePorts(list, "ports.txt");
     }
     private static void RemovePort() {
         if (allPort != null) {

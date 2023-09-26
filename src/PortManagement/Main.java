@@ -265,6 +265,7 @@ public class Main {
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print( entry.getKey()+"," +"\t");
             }
+
             if (allVehicle != null && !allVehicle.isEmpty()){
                 System.out.println(" ");
                 System.out.println("Vehicle: ");
@@ -272,6 +273,7 @@ public class Main {
                 System.out.print(entry.getKey() + "," + "\t");
             }
         }
+        System.out.println(" ");
         scanner.nextLine();  // Consume the leftover newline
         String posi= scanner.nextLine();
         allContainer.get(id).setPosition(posi);
@@ -345,6 +347,7 @@ public class Main {
             for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
                 System.out.print( entry.getKey()+"," +"\t");
             }
+            System.out.println(" ");
             System.out.println("Enter the ID of the container:");
             String id = scanner.nextLine();
 //            if (allContainer.get(id).getPosition().charAt(0) == 'P'){
@@ -364,6 +367,7 @@ public class Main {
             for (Container container : manager.getPortResponsible().getContainers()) {
                 System.out.print( container.getID()+"," +"\t");
             }
+            System.out.println(" ");
             System.out.println("Enter the ID of the container:");
             String id = scanner.nextLine();
 //            if (allContainer.get(id).getPosition().charAt(0) == 'P'){
@@ -427,6 +431,7 @@ public class Main {
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
             System.out.print(entry.getKey() + "," + "\t");
         }
+        System.out.println(" ");
         System.out.println("Enter the starting Port:");
         String from=scanner.nextLine();
         System.out.println("Enter the destination Port:");
@@ -529,6 +534,7 @@ public class Main {
             for (Trip trip : Trip.getOngoingTrips()) {
                 System.out.print(trip + "," + "\t");
             }
+            System.out.println(" ");
             System.out.println("Enter the tripID you want to end:");
             String ongoingtrip = scanner.nextLine();
             allTrip.get(ongoingtrip).completeTrip();
@@ -544,6 +550,7 @@ public class Main {
                     System.out.print(trip + "," + "\t");
                 }
             }
+            System.out.println(" ");
             System.out.println("Enter the tripID you want to end:");
             String ongoingtrip = scanner.nextLine();
             allTrip.get(ongoingtrip).completeTrip();
@@ -611,6 +618,7 @@ public class Main {
         for (Map.Entry<String, Port> entry : allPort.entrySet()) {
             System.out.print(entry.getKey() + "," + "\t");
         }
+        System.out.println(" ");
     }
 
     }
@@ -620,6 +628,7 @@ public class Main {
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
             }
+            System.out.println(" ");
             System.out.println("Enter the ID of the container:");
             String id = scanner.nextLine();
             if (allPort.get(id).getContainers()!=null){
@@ -725,6 +734,8 @@ public class Main {
                 a+=1;
             }
         }
+        System.out.println(" ");
+
         if (a==0){
             System.out.println("There is no Port available");
             return;
@@ -745,6 +756,7 @@ public class Main {
         for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
             System.out.print(entry.getKey() + "," + "\t");
         }
+        System.out.println(" ");
         System.out.println("Enter the ID of the Vehicle:");
         String id = scanner.nextLine();
     if (allVehicle.get(id).getContainer()!=null){
@@ -766,7 +778,7 @@ public class Main {
                     a+=1;
                 }
             }
-
+        System.out.println(" ");
         }
         if(a==0) {
             System.out.println("Add the Port first");
@@ -841,7 +853,7 @@ public class Main {
         }else{
             System.out.println("No manager");
             return;}
-
+        System.out.println(" ");
         if (a==0){
             System.out.println("All allocated");
         }
@@ -857,6 +869,7 @@ public class Main {
                     System.out.print(entry.getKey() + "," + "\t");
                 }
             }
+            System.out.println(" ");
         }else{
             System.out.println("No Port");
             return;}
@@ -902,7 +915,7 @@ public class Main {
             case 2:
                 System.out.println("Container available: ");
                 for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
-                    System.out.print(entry.getKey() + "," + "\t");
+                    System.out.print(entry.getKey() + "," + entry.getValue());
                 }
                 scanner.nextLine();  // Consume the leftover newline
                 break;
@@ -942,6 +955,7 @@ public class Main {
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
             }
+        System.out.println(" ");
         }else{return;}
         System.out.println(" ");
 
@@ -1050,6 +1064,7 @@ public class Main {
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
             }
+        System.out.println(" ");
         }else{return;}
         int a=0;
         if (allContainer != null && !allContainer.isEmpty()) {
@@ -1061,6 +1076,7 @@ public class Main {
                     System.out.print(entry.getKey() + "," + "\t");
                 }
             }
+            System.out.println(" ");
             if (a==0){
                 System.out.println("All Container allocated");}
         }else{
@@ -1163,6 +1179,7 @@ public class Main {
             for (Map.Entry<String, Port> entry : allPort.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
             }
+            System.out.println(" ");
         }else{
             System.out.println("No Port");
             return;}
@@ -1208,7 +1225,7 @@ public class Main {
             case 2:
                 System.out.println("Ports available: ");
                 for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-                    System.out.print(entry.getKey() + "," + "\t");
+                    System.out.print(entry.getKey() + "," + entry.getValue());
                 }
                 break;
             case 3:
@@ -1221,6 +1238,7 @@ public class Main {
         System.out.println("1. Allocate a vehicle");
         System.out.println("2. Refuel");
         System.out.println("3. List all vehicle");
+        System.out.println("4. Fuel used in a day:");
         System.out.print("Enter your choice(number): ");
         int choice;
         try {
@@ -1236,6 +1254,7 @@ public class Main {
             for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
                 System.out.print(entry.getKey() + "," + "\t");
             }
+            System.out.println(" ");
         }else {
             System.out.println("No vehicle");
             return;
@@ -1271,15 +1290,40 @@ public class Main {
             case 3:
                 System.out.println("Vehicle available: ");
                 for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
-                    System.out.print(entry.getKey() + "," + "\t");
+                    System.out.println(entry.getKey() + "," + entry.getValue());
                 }
-                return;
+                break;
+            case 4:
+                System.out.print("Enter a date (format: yyyy-mm-dd): ");
+                String input = scanner.nextLine();
+
+// Parse the input into a LocalDate
+                LocalDate date;
+                try {
+                    date = LocalDate.parse(input);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter a date in the format yyyy-mm-dd.");
+                    return;
+                }
+
+// Convert the LocalDate to a LocalDateTime at the start of the day
+                LocalDateTime dateTime = date.atStartOfDay();
+
+                System.out.println("You entered: " + dateTime);
+                System.out.println("Amount of fuel refueled this day:"+fuelUsedInADay.get(dateTime));
         }
     }
     public static void saveData(){
         try {
-            FileOutputStream fos = new FileOutputStream("port.ser");
+            FileOutputStream fos = new FileOutputStream("fuel.ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(fuelUsedInADay);
+            oos.close();
+            fos.close();
+            System.out.println("Serialized data is saved in fuel.ser");
+
+             fos = new FileOutputStream("port.ser");
+             oos = new ObjectOutputStream(fos);
             oos.writeObject(allPort);
             oos.close();
             fos.close();
@@ -1314,8 +1358,14 @@ public class Main {
     }
     public static void readData() {
         try {
-            FileInputStream fis = new FileInputStream("port.ser");
+            FileInputStream fis = new FileInputStream("fuel.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
+            fuelUsedInADay = (HashMap<LocalDateTime, Double>) ois.readObject();
+            ois.close();
+            fis.close();
+
+             fis = new FileInputStream("port.ser");
+             ois = new ObjectInputStream(fis);
             allPort = (TreeMap) ois.readObject();
             ois.close();
             fis.close();
@@ -1357,51 +1407,85 @@ public class Main {
 
         // Displaying the TreeMap
         for (Map.Entry<String, Port> entry : Port.allPort.entrySet()) {
-            System.out.println("Port ID: " + entry.getKey());
+            System.out.println("Port ID: " + entry.getKey()+" "+entry.getValue());
         }
 
         for (Map.Entry<String, Container> entry : Container.allContainer.entrySet()) {
-            System.out.println("Container ID: " + entry.getKey());
+            System.out.println("Container ID: " + entry.getKey()+" "+entry.getValue());
+        }
+
+        for (Map.Entry<String, Vehicle> entry : allVehicle.entrySet()) {
+            System.out.println("Vehicle ID:"+entry.getKey() +" "+entry.getValue());
         }
     }
 
     //endregion
     public static void main (String[]args) {
-
-// Create an array to store the vehicles
-        Vehicle[] vehicles = new Vehicle[20];
-
-// Define the types
-        String[] types = {"ship", "truck", "reefer_truck", "tanker_truck"};
-
-// Create a random number generator
-        Random random = new Random();
-
-// Loop through the array and create new Vehicle instances
-        for (int i = 0; i < vehicles.length; i++) {
-            // Generate a random type index
-            int typeIndex = random.nextInt(types.length);
-
-            // Generate a random ID
-            String id = (types[typeIndex].equals("ship") ? "sh" : "tr") + (100 + i);
-
-            // You can replace the other parameters with the actual values you want to use
-            vehicles[i] = new Vehicle(id, types[typeIndex], 0.0, 0.0, 0.0, null, null);
-        }
-
+        readData();
+//region ResetData
+////generate 20 vehicle
+//        Vehicle[] vehicles = new Vehicle[20];
+//        String[] types = {"ship", "truck", "reefer_truck", "tanker_truck"};
+//        Random random = new Random();
+//        for (int i = 0; i < vehicles.length; i++) {
+//            // Generate a random type index
+//            int typeIndex = random.nextInt(types.length);
+//
+//            // Generate a random ID
+//            String id = (types[typeIndex].equals("ship") ? "sh" : "tr") + (101 + i);
+//
+//            // Generate random fuel and carrying capacities
+//            double fuelCapacity = 100 + (500 - 100) * random.nextDouble();
+//            double carryingCapacity = 150 + (250 - 150) * random.nextDouble();
+//
+//            // Create a new Vehicle object with the generated values
+//            vehicles[i] = new Vehicle(id, types[typeIndex], carryingCapacity, fuelCapacity, 0.0, null, null);
+//        }
+////generate 30 container
+//
+//// Create an array to store the containers
+//        Container[] containers = new Container[30];
+//        String[] types1 = {"DryStorage", "OpenTop", "OpenSide", "Refrigerated", "Liquid"};
+//        for (int i = 0; i < containers.length; i++) {
+//            // Generate a random type index
+//            int typeIndex = random.nextInt(types.length);
+//
+//            // Generate a random ID
+//            String id = "c" + (101 + i);
+//
+//            // Generate a random weight
+//            double weight = 100 + (150 - 100) * random.nextDouble();
+//
+//            // Create a new Container object with the generated values
+//            containers[i] = new Container(id, weight, types1[typeIndex], null);
+//        }
+//
+//
+//
+//
+//        // Create 5 ports
+//        Port[] ports = new Port[05];
+//        for (int i = 0; i < ports.length; i++) {
+//            String id = "P" + (101 + i);
+//            String portName = "PortName" + (101 + i);
+//            double totalCapacity = 500 + (1000 - 500) * random.nextDouble();
+//            double latitude = -90 + (90 - (-90)) * random.nextDouble();
+//            double longitude = -180 + (180 - (-180)) * random.nextDouble();
+//           boolean landingAbility = random.nextBoolean();
+//           ports[i] = new Port(id, portName, latitude, longitude, totalCapacity, landingAbility);
+//}
+        //endregion
+        System.out.println(" ");
         fuelUsedInADay = new HashMap<>();
         today = LocalDate.now().atStartOfDay();
-
-        Scanner scanner = new Scanner(System.in);
         fuelUsedInADay.put(today,0.0);
-        readData();
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 saveData();
-                    }
+            }
         });
-
-
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             displayWelcomeScreen();
             displayMainMenu();

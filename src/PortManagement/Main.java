@@ -7,21 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.io.*;
-
-
-// Java Program to Illustrate StudentRecordLinkedList Class
-
-
-
-// Importing required classes
-
-
-// Java Program to Illustrate StudentRecordManagement Class
-
-
-
-// Importing required classes
-
+import java.util.stream.Collectors;
 
 import static PortManagement.Container.allContainer;
 import static PortManagement.Port.allPort;
@@ -31,12 +17,11 @@ import static PortManagement.Vehicle.allVehicle;
 
 
 public class Main {
-    //    private static Port Port ;
     public static HashMap<LocalDateTime, Double> fuelUsedInADay;
-
     // Add a key-value pair to the map
     public static LocalDateTime today = LocalDate.now().atStartOfDay();
     private static Scanner scanner = new Scanner(System.in);
+    //region Methods
     private static void displayWelcomeScreen() {
         System.out.println("COSC2081 GROUP ASSIGNMENT");
         System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
@@ -1206,12 +1191,21 @@ public class Main {
             oos.close();
             fos.close();
             System.out.println("Serialized data is saved in vehicle.ser");
+
+            TreeMap<String, Trip> filteredTrips = Trip.allTrip.entrySet().stream()
+                    .filter(entry -> entry.getValue().getArrivalTime().isBefore(LocalDateTime.now().minusDays(7)))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, TreeMap::new));
+
+            // Write the filtered trips to a file
+            fos = new FileOutputStream("trips.ser");
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(filteredTrips);
+            oos.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
-    public static void readData(){
-
+    public static void readData() {
         try {
             FileInputStream fis = new FileInputStream("port.ser");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -1233,13 +1227,25 @@ public class Main {
             ois.close();
             fis.close();
             System.out.println("Deserialized data is read from vehicle.ser");
-        } catch (IOException ioe) {
+
+            fis = new FileInputStream("trips.ser");
+            ois = new ObjectInputStream(fis);
+            TreeMap<String, Trip> trips = (TreeMap<String, Trip>) ois.readObject();
+            ois.close();
+
+            // Print the size of the deserialized TreeMap
+            System.out.println("Number of trips: " + trips.size());
+
+            // Print each trip
+            for (Map.Entry<String, Trip> entry : trips.entrySet()) {
+                System.out.println("Trip ID: " + entry.getKey() + ", Arrival Time: " + entry.getValue().getArrivalTime());
+            }
+
+        } catch(IOException ioe){
             ioe.printStackTrace();
-            return;
-        } catch (ClassNotFoundException c) {
+        } catch(ClassNotFoundException c){
             System.out.println("Class not found");
             c.printStackTrace();
-            return;
         }
 
         // Displaying the TreeMap
@@ -1248,9 +1254,11 @@ public class Main {
         }
 
         for (Map.Entry<String, Container> entry : Container.allContainer.entrySet()) {
-            System.out.println("Container ID: " + entry.getKey() );
+            System.out.println("Container ID: " + entry.getKey());
         }
     }
+
+    //endregion
     public static void main (String[]args) {
         fuelUsedInADay = new HashMap<>();
         today = LocalDate.now().atStartOfDay();

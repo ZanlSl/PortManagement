@@ -1,11 +1,11 @@
 package PortManagement;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public interface TripInterface {
-//    void getTripsBetweenDates(LocalDateTime startDate, LocalDateTime endDate);
+//    void getTripsBetweenDates(LocalDate startDate, LocalDate endDate);
     void completeTrip();
-//    void listAllTripHappeningAt(LocalDateTime inputTime);
+//    void listAllTripHappeningAt(LocalDate inputTime);
     void setDistanceAuto();
     void startNewTrip();
     void setFrom(Port from);

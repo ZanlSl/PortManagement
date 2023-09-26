@@ -2,15 +2,16 @@ package PortManagement;
 
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Trip implements TripInterface, Serializable {
     private String ID;
-    private LocalDateTime departTime;
-    private LocalDateTime arrivalTime;
+    private LocalDate departTime;
+    private LocalDate arrivalTime;
     private Port from;
     private Port to;
     private double estimatedFuel;
@@ -53,7 +54,7 @@ public class Trip implements TripInterface, Serializable {
 
     }
 
-    public Trip(String ID, LocalDateTime departTime, LocalDateTime arrivalTime, Port from, Port to, double estimatedFuel, Vehicle vehicle, Container container) {
+    public Trip(String ID, LocalDate departTime, LocalDate arrivalTime, Port from, Port to, double estimatedFuel, Vehicle vehicle, Container container) {
         this.ID = ID;
         this.departTime = departTime;
         this.arrivalTime = arrivalTime;
@@ -72,8 +73,14 @@ public class Trip implements TripInterface, Serializable {
 
     }
 
-    public static void getTripsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
+    public static void getTripsBetweenDates(LocalDate startDate, LocalDate endDate) {
         for (Trip trip : allTrip.values()) {
+            if (trip.arrivalTime==null){
+                if (trip.departTime.isAfter(startDate)){
+                    System.out.println(trip);
+                }
+                continue;
+            }
             if ((trip.departTime.isAfter(startDate) || trip.departTime.isEqual(startDate)) &&
                     (trip.arrivalTime.isBefore(endDate) || trip.arrivalTime.isEqual(endDate))) {
                 System.out.println(trip);
@@ -96,10 +103,13 @@ public class Trip implements TripInterface, Serializable {
 
 
 
-    public static void listAllTripHappeningAt(LocalDateTime inputTime){
+    public static void listAllTripHappeningAt(LocalDate inputTime){
 //        !!!
         for (Map.Entry<String, Trip> entry : Trip.allTrip.entrySet()) {
             Trip trip = entry.getValue();
+            if (trip.arrivalTime==null){
+                continue;
+            }
 
             // Check if the departTime or arrivalTime of the trip falls on the given day
             if (!inputTime.isBefore(trip.departTime) && !inputTime.isAfter(trip.arrivalTime)) {                System.out.println("Trip ID: " + trip.ID);
@@ -120,9 +130,9 @@ public class Trip implements TripInterface, Serializable {
     }
     //!!!
     public void startNewTrip(){
-            departTime=LocalDateTime.now();
-            vehicle.moveTo(null);
-            currentStatus=TripStatus.ONGOING;
+        departTime = LocalDate.now();
+        vehicle.moveTo(null);
+        currentStatus=TripStatus.ONGOING;
     }
 
     public void completeTrip(){
@@ -132,7 +142,7 @@ public class Trip implements TripInterface, Serializable {
         // Set the status of the trip to "completed"
         this.currentStatus = TripStatus.COMPLETED;
         //add current time!!!
-        this.arrivalTime = LocalDateTime.now();
+        this.arrivalTime = LocalDate.now();
 
     }
     public static ArrayList<Trip> getAllTripAsList(){
@@ -149,20 +159,20 @@ public class Trip implements TripInterface, Serializable {
         this.ID = ID;
     }
 
-    public LocalDateTime getDepartTime() {
+    public LocalDate getDepartTime() {
         return departTime;
     }
 
-    public void setDepartTime(LocalDateTime departTime) {
+    public void setDepartTime(LocalDate departTime) {
 
         this.departTime = departTime;
     }
 
-    public LocalDateTime getArrivalTime() {
+    public LocalDate getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
+    public void setArrivalTime(LocalDate arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 

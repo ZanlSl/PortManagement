@@ -53,37 +53,44 @@ public class Port implements  PortInterface, Serializable {
     }
 
     public void load(Vehicle vehicle, Container container) {
-        if (containers.contains(container)) {
-            container.setPosition(vehicle.getID());
-            vehicle.load(container);
-            containers.remove(container);
-            updateCurrentCapacity();
-        } else {
-            System.out.println("This port does not have the specified container");
+        //check vehicle position
+        if (vehicle.getCurrentPort().getId().equals(this.ID)) {
+            if (container.getID().equals(this.ID)) {
+                container.setPosition(vehicle.getID());
+                vehicle.load(container);
+                this.containers.remove(container);
+                updateCurrentCapacity();
+                return;
+
+            } else {
+                System.out.println("This port does not have the specified container");
+
+                return;
+            }
         }
     }
-
     public void updateCurrentCapacity() {
-        currentCapacity = 0.0;
-        for (Container container : containers) {
-            currentCapacity += container.getWeight();
+        for (Container container : this.containers) {
+            this.currentCapacity += container.getWeight();
         }
     }
     public void addContainer(Container container) {
-        if (currentCapacity + container.getWeight() <= totalCapacity) {
-            containers.add(container);
+        if (this.currentCapacity + container.getWeight() <= this.totalCapacity) {
+            this.containers.add(container);
             updateCurrentCapacity();
         } else {
             System.out.println("The port is at full capacity");
         }
     }
     public void removeContainer(Container container) {
-        if (containers.contains(container)) {
-            containers.remove(container);
-            System.out.println("Container has been removed from the port.");
-            updateCurrentCapacity();
-        } else {
-            System.out.println("This container is not at the port.");
+        for (Container listObject : containers) {
+            if (listObject.toString().equals(container)) {
+                containers.remove(container);
+                System.out.println("Container has been removed from the port.");
+                updateCurrentCapacity();
+            } else {
+                System.out.println("This container is not at the port.");
+            }
         }
     }
 
@@ -133,6 +140,7 @@ public class Port implements  PortInterface, Serializable {
         for (Vehicle vehicle : vehicles) {
             if (vehicle.getType().equals(type)){
                  System.out.println(vehicle);
+                System.out.println(" ");
             }
     }}
 
@@ -228,12 +236,25 @@ public class Port implements  PortInterface, Serializable {
         return "Port{" +
 
                 "ID='" + ID + ";"+ name+ ";"+ latitude+ ";"  + longitude+ ";" + totalCapacity+ ";" + landingAbility +
-                ";"+ containers +
-                ";"+ vehicles ;
+                ";"+ getContainerID()+
+                ";"+ getVehicleID() ;
 
     }
 
-
+    private ArrayList<String> getContainerID(){
+        ArrayList<String> containerIds = new ArrayList<>();
+        for (Container container : containers) {
+            containerIds.add(container.getID());
+        }
+        return containerIds;
+    }
+    private ArrayList<String> getVehicleID(){
+        ArrayList<String> vehicleIDs = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            vehicleIDs.add(vehicle.getID());
+        }
+        return vehicleIDs;
+    }
 
 
 

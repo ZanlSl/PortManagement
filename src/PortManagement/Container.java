@@ -88,7 +88,7 @@ public class Container implements ContainerInterface, Serializable {
         return totalWeight;
     }
     public String getID() {
-        return ID;
+        return this.ID;
     }
 
     public void setID(String ID) {

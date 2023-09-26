@@ -50,9 +50,6 @@ public class Vehicle implements  VehicleInterface, Serializable {
 
 
     public void moveTo(Port port) {
-        if (this.currentPort != null) {
-            this.currentPort.removeVehicle(this);
-        }
         this.currentPort = port;
         port.addVehicle(this);
 
@@ -104,13 +101,18 @@ public class Vehicle implements  VehicleInterface, Serializable {
             } else {
                 System.out.println("Vehicle is at full capacity");
             }
+            if(this.container.getID().equals(container.getID())){
+                this.currentPort.removeContainer(container);
+            }
         } else {
             System.out.println("This vehicle already has a container");
         }
     }
 
     public void unload() {
-        if (container != null) {
+        //unload to the port standing
+        if (container != null&& currentPort != null) {
+            //check port capacity
             if (currentPort.getCurrentCapacity() + container.getWeight() <= currentPort.getTotalCapacity()) {
                 currentPort.addContainer(container);
                 container.setPosition(currentPort.getId());
@@ -217,8 +219,8 @@ public class Vehicle implements  VehicleInterface, Serializable {
                 '}';
     }
 
-    public void unload(Container container1) {
-    }
+
+
 
     // getters and setters for each field can be added here
 }

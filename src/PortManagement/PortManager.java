@@ -12,11 +12,12 @@ class PortManager implements Serializable {
 
     private Port portResponsible;
 
-    public static TreeMap<String,PortManager> allManager;
-    public static ArrayList<Port> portTaken;
+    public static TreeMap<String,PortManager> allManager=new TreeMap<>();
+    public static ArrayList<Port> portTaken= new ArrayList<>();
     public PortManager(String accountName, String password,Port portResponsible){
         this.accountName=accountName;
         this.password=password;
+        this.portResponsible=portResponsible;
         portTaken.add(portResponsible);
         allManager.put(accountName,this);
     }

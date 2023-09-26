@@ -20,7 +20,7 @@ public class Container implements ContainerInterface{
 
 
 
-    public Container(String ID, double weight, String type, double fuelCapacity, double currentFuel, String position){
+    public Container(){
         if (!allContainer.isEmpty()) {
             String lastKey = allContainer.lastKey();
             idCounter = Integer.parseInt(lastKey.substring(1));

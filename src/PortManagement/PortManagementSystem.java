@@ -207,12 +207,10 @@ public class PortManagementSystem {
                                 String ID = txt[0];
                                 double weight = Double.parseDouble(txt[1]);
                                 String type = txt [2];
-                                double fuelCapacity = Double.parseDouble (txt [3]);
-                                double currentFuel = Double.parseDouble (txt [4]);
-                                String position =   txt[5];
+                                String position =   txt[3];
 
 
-                                list.add(new Container( ID,  weight,  type, fuelCapacity, currentFuel, position));
+                                list.add(new Container( ID,  weight,  type, position));
                         }
                 }catch (Exception e){}
                 return list;

@@ -27,9 +27,9 @@ public class Main {
         System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
         System.out.println("Instructor: Mr. Minh Vu & Dr. Phong Ngo");
         System.out.println("Group: [Your Group Name]");
-        System.out.println("sXXXXXXX, [Student Name]");
-        System.out.println("sXXXXXXX, [Student Name]");
-        System.out.println("sXXXXXXX, [Student Name]");
+        System.out.println("s3979126, [Hoang Tho Anh]");
+        System.out.println("s3978814, [Student Name]");
+        System.out.println("s3891735, [Student Name]");
         System.out.println("=========================================");
         System.out.println("Press Enter to continue...");
         scanner.nextLine();
@@ -109,8 +109,9 @@ public class Main {
             System.exit(0);
         }else {
             System.out.println("Invalid choice. Please enter 1 or 2.");
-            chooseChoices(user);
         }
+        chooseChoices(user);
+
     }
 
     private static void modifyOption(String user) {
@@ -792,9 +793,12 @@ public class Main {
     public static void functionOption(String user){
         System.out.println("=== Function Option ===");
         System.out.println("1. Container");
-        System.out.println("2. Port");
-        System.out.println("3. Trip");
+        System.out.println("2. Trip");
+        System.out.println("3. Port");
         System.out.println("4. Vehicle");
+        if (user.equals("admin")){
+            System.out.println("5. Allocate Manager");
+        }
 
         System.out.print("Enter your choice(number): ");
 
@@ -809,25 +813,74 @@ public class Main {
         }
 
         if (choice == 1) {
-            ContainerFunctionData();
+            ContainerFunctionData(user);
         } else if (choice==2) {
             TripFunctionData();
         } else if (choice==3) {
             PortFunctionData();
         } else if (choice==4) {
             VehicleFunctionData();
+        } else if (choice==5) {
+            AllocateManager();
         } else {
             System.out.println("Invalid choice.");
             chooseChoices(user);
         }
     }
+    private static void AllocateManager(){
 
-    private static void ContainerFunctionData() {
+        int a=0;
+        if (allManager != null && !allManager.isEmpty()) {
+            System.out.println("Manager available: ");
+            for (Map.Entry<String, PortManager> entry : allManager.entrySet()) {
+                if(entry.getValue().getPortResponsible()==null) {
+                    a+=1;
+                    System.out.print(entry.getKey() + "," + "\t");
+                }
+            }
+        }else{
+            System.out.println("No manager");
+            return;}
+
+        if (a==0){
+            System.out.println("All allocated");
+        }
+        System.out.println("Enter the manager account name:");
+        String manager=scanner.nextLine();
+
+        a=0;
+        if (allPort != null && !allPort.isEmpty()) {
+            System.out.println("Ports available: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                if ( !PortManager.portTaken.contains(entry.getKey())) {
+                    a+=1;
+                    System.out.print(entry.getKey() + "," + "\t");
+                }
+            }
+        }else{
+            System.out.println("No Port");
+            return;}
+
+        if (a==0){
+            System.out.println("All allocated");
+
+        }
+        System.out.println("Enter the Port:");
+        String to=scanner.nextLine();
+
+        PortManager.portTaken.add(allPort.get(to));
+        allManager.get(manager).setPortResponsible(allPort.get(to));
+    }
+    private static void ContainerFunctionData(String user) {
+
         System.out.println("=== Container Function ===");
-        System.out.println("1. Load container");
-        System.out.println("2. Unload container");
-        System.out.println("3. Calculate weight of each type");
-        System.out.println("4. List all container");
+        System.out.println("1. Calculate weight of each type");
+        System.out.println("2. List all container");
+        if (user.equals("admin")) {
+            System.out.println("3. Load container");
+            System.out.println("4. Unload container");
+            System.out.println("5. Allocate container to Port");
+        }
         System.out.print("Enter your choice(number): ");
 
         int choice;
@@ -842,22 +895,37 @@ public class Main {
 
         switch(choice){
             case 1:
-                LoadContainer();
+                CalculateContainerWrightByType();
                 scanner.nextLine();  // Consume the leftover newline
 
                 break;
             case 2:
-                UnLoad();
-                scanner.nextLine();  // Consume the leftover newline
-                break;
-            case 3:
-                CalculateContainerWrightByType();
-                scanner.nextLine();  // Consume the leftover newline
-                break;
-            case 4:
                 System.out.println("Container available: ");
                 for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
                     System.out.print(entry.getKey() + "," + "\t");
+                }
+                scanner.nextLine();  // Consume the leftover newline
+                break;
+            case 3:
+                if (user.equals("admin")){
+                    LoadContainer();
+                }else{
+                    System.out.println("Invalid choice. Returning to main menu.");
+                }
+                scanner.nextLine();  // Consume the leftover newline
+                break;
+            case 4:
+                if (user.equals("admin")){
+                    UnLoad();
+                }else{
+                    System.out.println("Invalid choice. Returning to main menu.");
+                }
+                break;
+            case 5:
+                if (user.equals("admin")){
+                    AllocateContainer();
+                }else{
+                    System.out.println("Invalid choice. Returning to main menu.");
                 }
                 break;
             default:
@@ -868,10 +936,13 @@ public class Main {
 
     }
     public static void LoadContainer(){
-        System.out.println("Ports available: ");
-        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-            System.out.print(entry.getKey() + "," + "\t");
-        }
+        if (allPort != null && !allPort.isEmpty()) {
+
+            System.out.println("Ports available: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                System.out.print(entry.getKey() + "," + "\t");
+            }
+        }else{return;}
         System.out.println(" ");
 
         System.out.println("Enter the Port:");
@@ -973,6 +1044,37 @@ public class Main {
         System.out.println("Total weight of type"+ type +" is "+Container.totalWeightCalculateByType(type));
 
     }
+    private static void AllocateContainer(){
+        if (allPort != null && !allPort.isEmpty()) {
+            System.out.println("Ports available: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                System.out.print(entry.getKey() + "," + "\t");
+            }
+        }else{return;}
+        int a=0;
+        if (allContainer != null && !allContainer.isEmpty()) {
+
+            System.out.println("Container available: ");
+            for (Map.Entry<String, Container> entry : allContainer.entrySet()) {
+                if(entry.getValue().getPosition()==null) {
+                    a+=1;
+                    System.out.print(entry.getKey() + "," + "\t");
+                }
+            }
+            if (a==0){
+                System.out.println("All Container allocated");}
+        }else{
+            System.out.println("No container");}
+        System.out.println("Enter the Port:");
+        String to=scanner.nextLine();
+        System.out.println("Enter the container:");
+        String container=scanner.nextLine();
+        allContainer.get(container).setPosition(to);
+        allPort.get(to).addContainer(allContainer.get(container));
+
+
+
+    }
     private static void TripFunctionData() {
         System.out.println("=== Trip Function ===");
         System.out.println("1. Search trip by a date");
@@ -1055,10 +1157,15 @@ public class Main {
             scanner.nextLine(); // Clear the invalid input
             return; // Return to the main menu
         }
-        System.out.println("Ports available: ");
-        for (Map.Entry<String, Port> entry : allPort.entrySet()) {
-            System.out.print(entry.getKey() + "," + "\t");
-        }
+        if (allPort != null && !allPort.isEmpty()) {
+
+            System.out.println("Ports available: ");
+            for (Map.Entry<String, Port> entry : allPort.entrySet()) {
+                System.out.print(entry.getKey() + "," + "\t");
+            }
+        }else{
+            System.out.println("No Port");
+            return;}
         String port=scanner.nextLine();
 
         switch(choice){
@@ -1260,6 +1367,28 @@ public class Main {
 
     //endregion
     public static void main (String[]args) {
+
+// Create an array to store the vehicles
+        Vehicle[] vehicles = new Vehicle[20];
+
+// Define the types
+        String[] types = {"ship", "truck", "reefer_truck", "tanker_truck"};
+
+// Create a random number generator
+        Random random = new Random();
+
+// Loop through the array and create new Vehicle instances
+        for (int i = 0; i < vehicles.length; i++) {
+            // Generate a random type index
+            int typeIndex = random.nextInt(types.length);
+
+            // Generate a random ID
+            String id = (types[typeIndex].equals("ship") ? "sh" : "tr") + (100 + i);
+
+            // You can replace the other parameters with the actual values you want to use
+            vehicles[i] = new Vehicle(id, types[typeIndex], 0.0, 0.0, 0.0, null, null);
+        }
+
         fuelUsedInADay = new HashMap<>();
         today = LocalDate.now().atStartOfDay();
 

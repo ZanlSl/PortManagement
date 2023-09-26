@@ -1,12 +1,13 @@
 package PortManagement;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Trip implements TripInterface{
+public class Trip implements TripInterface, Serializable {
     private String ID;
     private LocalDateTime departTime;
     private LocalDateTime arrivalTime;

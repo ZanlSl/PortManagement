@@ -1,46 +1,64 @@
 package PortManagement;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 // Class representing a Port Manager
-class PortManager implements User {
+class PortManager implements Serializable {
     // Implement the User interface methods
-    
-    private String username;
+    private String accountName;
     private String password;
 
-    // Constructor to set username and password during object creation
-    public PortManager(String username, String password) {
-        this.username = username;
+    private Port portResponsible;
+
+    public static TreeMap<String,PortManager> allManager;
+    public static ArrayList<Port> portTaken;
+    public PortManager(String accountName, String password,Port portResponsible){
+        this.accountName=accountName;
+        this.password=password;
+        portTaken.add(portResponsible);
+        allManager.put(accountName,this);
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    // Implement the User interface method for login
-    @Override
-    public void login(String enteredUsername, String enteredPassword) {
-        // Check if the entered username and password match the Port Manager's credentials
-        if (username.equals(enteredUsername) && password.equals(enteredPassword)) {
-            System.out.println("Login successful!");
-        } else {
-            System.out.println("Login failed. Please check your credentials.");
-        }
+    public Port getPortResponsible() {
+        return portResponsible;
     }
-  
-        
-    
 
-    @Override
-    public void viewInformation() {
-        // Implement viewInformation for the port manager
+    public void setPortResponsible(Port portResponsible) {
+        this.portResponsible = portResponsible;
+    }
+
+    public static ArrayList<Port> getPortTaken() {
+        return portTaken;
+    }
+
+    public static void setPortTaken(ArrayList<Port> portTaken) {
+        PortManager.portTaken = portTaken;
     }
 
     @Override
-    public void modifyInformation() {
-        // Implement modifyInformation for the port manager
+    public String toString() {
+        return "PortManager{" +
+                "accountName='" + accountName + '\'' +
+                ", password='" + password + '\'' +
+                ", portResponsible=" + portResponsible +
+                '}';
     }
-
-    @Override
-    public void processEntities() {
-        // Implement processEntities for the port manager
-    }
-
 }
-

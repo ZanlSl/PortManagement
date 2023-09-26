@@ -1,4 +1,5 @@
 package PortManagement;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -7,7 +8,7 @@ import java.util.TreeMap;
 
 
 
-public class Container implements ContainerInterface{
+public class Container implements ContainerInterface, Serializable {
 
     private String ID;
     private double weight;
@@ -77,7 +78,7 @@ public class Container implements ContainerInterface{
                 System.out.println("Invalid container type");
         }
     }
-    public double totalWeightCalculateByType(String type){
+    public static double totalWeightCalculateByType(String type){
         double totalWeight = 0;
         for (Container container : allContainer.values()) {
             if (container.type.equals(type)) {

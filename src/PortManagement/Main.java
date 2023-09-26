@@ -26,10 +26,10 @@ public class Main {
         System.out.println("COSC2081 GROUP ASSIGNMENT");
         System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
         System.out.println("Instructor: Mr. Minh Vu & Dr. Phong Ngo");
-        System.out.println("Group: [Your Group Name]");
+        System.out.println("Group: [ Group 17]");
         System.out.println("s3979126, [Hoang Tho Anh]");
-        System.out.println("s3978814, [Student Name]");
-        System.out.println("s3891735, [Student Name]");
+        System.out.println("s3978814, [Pham Minh Quang]");
+        System.out.println("s3891735, [Huynh Phan Anh]");
         System.out.println("=========================================");
         System.out.println("Press Enter to continue...");
         scanner.nextLine();
